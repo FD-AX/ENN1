@@ -36,7 +36,9 @@ They do not run PyTorch.
 
 From the repository root, with an NVIDIA GPU (Kaggle/Colab T4 or P100, or a local card with <= 16 GB):
 
-    pip install -r requirements.txt      # on Kaggle/Colab torch is already installed; skip the cu128 pin
+Local environment: `pip install -r requirements.txt` (pins a CUDA 12.8 torch build).
+Kaggle/Colab: use the preinstalled torch; install only scipy/matplotlib if they are missing.
+
     python -m hw1.test_equations
     python -m hw1.measure --traces       # ~15-20 min on the full grid
     python -m hw1.calibrate
@@ -83,7 +85,8 @@ OOM rows are excluded from all fits.
   empty measurements, then references are dropped, `gc.collect()`, `empty_cache()`.
 - **Profiler.** `--traces` exports Chrome traces (CPU+CUDA, `with_flops`, `record_shapes`,
   `profile_memory`, forward under `record_function("FWD")`) for the smallest, a middle and the
-  largest feasible configuration. The traces explain the latency regimes. They are not the official timing.
+  largest feasible configuration. The traces help diagnose the latency regimes. The regime labels themselves come from the fitted
+  model's terms, and the traces are not the official timing.
 
 ## Analytical models
 
@@ -172,16 +175,17 @@ The reason is in the formula, not the GPU:
 
 The model separates the launch-dominated small workloads from the rest reasonably well. It cannot
 resolve a memory-bound region before the compute-dominated one. Measuring more configurations
-does not help, because every (S, B) gives the same network intensity. Individual layers do differ
+does not help, because for moderate and large workloads the network intensity approaches the same
+asymptotic value. Individual layers do differ
 (conv1, maxpool and ReLU have low intensity, conv5 high), so a per-layer roofline with the same three
 shared parameters would be the natural next step. That is left as optional future work and is not
 part of this submission.
 
 **Other deviations** (to be checked against the real run):
 
-- **Small S and B.** Kernel launch and framework overhead is the whole forward. Latency is flat in
-  S and B and only t0 matters; relative energy error is large, because each forward is short and
-  mostly board power.
+- **Small S and B.** Kernel launch and framework overhead are expected to dominate the forward, so latency
+  should be approximately flat in S and B. Energy may have a larger relative error there, because each
+  forward is short and mostly board power.
 - **Large S and B.** One effective R averages conv kernels with very different efficiency (7x7 on
   3 channels vs 1x1 on 256), and logical bytes are only a lower bound on conv traffic. With
   `benchmark=False` cuDNN's heuristics can change kernels between shapes, which gives steps the
