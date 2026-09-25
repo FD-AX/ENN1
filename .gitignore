@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+hw1/results/traces/
+HW_one.ipynb
+hw1/results/smoke/
