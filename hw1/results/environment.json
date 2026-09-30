@@ -1,0 +1,34 @@
+{
+  "created_utc": "2026-09-30T21:36:49.571012+00:00",
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.10.0+cu128",
+  "numpy": "2.4.6",
+  "cuda_build": "12.8",
+  "cudnn": 91002,
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "total_memory_bytes": 17094475776,
+  "nvidia_smi": "GPU-e5d0223b-f3df-d2f7-5512-fd0875d019e5, NVIDIA GeForce RTX 5070 Ti, 591.86",
+  "power_gpu_id": "GPU-e5d0223b-f3df-d2f7-5512-fd0875d019e5",
+  "precision": "FP32",
+  "cudnn_benchmark": false,
+  "tf32": false,
+  "seed": 42,
+  "extra_S": [
+    80,
+    272,
+    352,
+    400
+  ],
+  "extra_B": [
+    29,
+    56,
+    179
+  ],
+  "warmup": 10,
+  "repeats": 30,
+  "energy_seconds": 3,
+  "smoke": false,
+  "energy_skipped": false,
+  "latency_method": "median synchronized CUDA event interval per forward"
+}

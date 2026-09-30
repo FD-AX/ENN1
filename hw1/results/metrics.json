@@ -1,0 +1,86 @@
+{
+  "memory": {
+    "calibration": {
+      "median_ape_pct": 25.331929688160564,
+      "mean_ape_pct": 29.082892648307308,
+      "rmse": 16767602.502241984,
+      "n": 63
+    },
+    "validation": {
+      "median_ape_pct": 7.540479768765615,
+      "mean_ape_pct": 18.113708655737714,
+      "rmse": 17052046.5727931,
+      "n": 69
+    }
+  },
+  "latency": {
+    "calibration": {
+      "median_ape_pct": 15.856934139975074,
+      "mean_ape_pct": 15.696072060484742,
+      "rmse": 0.0020002505442940424,
+      "n": 63
+    },
+    "validation": {
+      "median_ape_pct": 11.125866746101174,
+      "mean_ape_pct": 13.29605088883,
+      "rmse": 0.0021495302437701197,
+      "n": 69
+    }
+  },
+  "energy": {
+    "calibration": {
+      "median_ape_pct": 4.304297691682531,
+      "mean_ape_pct": 8.097641750528176,
+      "rmse": 0.8195098767885515,
+      "n": 63
+    },
+    "validation": {
+      "median_ape_pct": 6.106498198135795,
+      "mean_ape_pct": 8.271803289489498,
+      "rmse": 0.5382834044729613,
+      "n": 69
+    }
+  },
+  "memory_runtime_estimate": {
+    "calibration": {
+      "median_ape_pct": 0.0,
+      "mean_ape_pct": 1.1870191779706725,
+      "rmse": 12067182.608036699,
+      "n": 63
+    },
+    "validation": {
+      "median_ape_pct": 0.0804930197459439,
+      "mean_ape_pct": 1.3027135308860753,
+      "rmse": 12254851.685023459,
+      "n": 69
+    }
+  },
+  "baseline_extra_bytes": {
+    "min": 8519920.0,
+    "median": 9568496.0,
+    "max": 10617072.0,
+    "note": "Persistent runtime allocations, measured, not attributed."
+  },
+  "flops_profiler": {
+    "median_ape_pct": 0.0,
+    "mean_ape_pct": 0.0,
+    "rmse": 0.0,
+    "n": 3
+  },
+  "oom": {
+    "observed": 0,
+    "configurations": 132,
+    "predicted_over_total_capacity": 0,
+    "note": "Total-capacity comparison excludes external usage and backend temporary storage. No prescribed grid point ran out of memory: the empirical OOM boundary is outside the tested grid."
+  },
+  "predicted_regimes": {
+    "launch": 39,
+    "memory": 0,
+    "compute": 93
+  },
+  "network_intensity_flops_per_byte": {
+    "min": 4.061624294680784,
+    "max": 48.649956247272094,
+    "fitted_ridge": 46.0328174940638
+  }
+}

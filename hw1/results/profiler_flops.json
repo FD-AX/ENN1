@@ -1,0 +1,41 @@
+[
+  {
+    "S": 32,
+    "B": 1,
+    "analytical_flops": 18450432.0,
+    "profiler_flops": 18450432,
+    "trace": "S32_B1.json",
+    "maxpool_alloc_bytes": [
+      8192,
+      16384
+    ],
+    "expected_pool_output_bytes": 8192,
+    "expected_pool_indices_bytes": 16384
+  },
+  {
+    "S": 512,
+    "B": 4,
+    "analytical_flops": 18573631488.0,
+    "profiler_flops": 18573631488,
+    "trace": "S512_B4.json",
+    "maxpool_alloc_bytes": [
+      8388608,
+      16777216
+    ],
+    "expected_pool_output_bytes": 8388608,
+    "expected_pool_indices_bytes": 16777216
+  },
+  {
+    "S": 512,
+    "B": 256,
+    "analytical_flops": 1188712415232.0,
+    "profiler_flops": 1188712415232,
+    "trace": "S512_B256.json",
+    "maxpool_alloc_bytes": [
+      536870912,
+      1073741824
+    ],
+    "expected_pool_output_bytes": 536870912,
+    "expected_pool_indices_bytes": 1073741824
+  }
+]

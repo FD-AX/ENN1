@@ -3,7 +3,9 @@ import csv
 import gc
 import json
 import platform
+import shutil
 import subprocess
+import tempfile
 import threading
 import time
 from datetime import datetime, timezone
@@ -171,7 +173,11 @@ def export_trace(model, S, B, path):
                 model(x)
             torch.cuda.synchronize()
             prof.step()
-    prof.export_chrome_trace(str(path))
+    # kineto opens the path as a narrow string, which fails for non-ASCII
+    # directories on Windows; write to a temp file and move it into place.
+    with tempfile.TemporaryDirectory() as tmp:
+        prof.export_chrome_trace(str(Path(tmp) / path.name))
+        shutil.move(str(Path(tmp) / path.name), str(path))
     # Only supported Conv/Linear ops; biases and comparisons are excluded in both.
     measured = sum(e.flops for e in prof.key_averages())
     return {'S': S, 'B': B, 'analytical_flops': float(flops(S, B)),

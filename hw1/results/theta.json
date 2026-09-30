@@ -1,0 +1,74 @@
+{
+  "latency": {
+    "launch_overhead": 0.0002770864862498808,
+    "bandwidth": 300622315454.08606,
+    "throughput": 13838492181940.818
+  },
+  "energy": {
+    "latency": {
+      "launch_overhead": 0.0002770864862498808,
+      "bandwidth": 300622315454.08606,
+      "throughput": 13838492181940.818
+    },
+    "P0_w": 48.42828464482564,
+    "e_flop": 4.477304250453016e-24,
+    "e_byte": 9.362010242023231e-10
+  },
+  "latency_diagnostics": {
+    "log_residual_rmse": 0.2100277025619148,
+    "jacobian_singular_values": [
+      5.4544200104500336,
+      4.039390969934785,
+      0.7795164521402449
+    ],
+    "jacobian_column_norms": {
+      "launch_overhead": 4.139886350969621,
+      "bandwidth": 1.1875829005481027,
+      "throughput": 5.303396158399534
+    },
+    "relative_std": {
+      "launch_overhead": 0.07892225464684252,
+      "bandwidth": 0.26942236004178005,
+      "throughput": 0.042454494625487116
+    },
+    "warning": "launch_overhead is one aggregate constant (not N_launch * tau); values are effective, not hardware peaks."
+  },
+  "energy_diagnostics": {
+    "normalized_design_condition": 56749.57274280691,
+    "log_predictor_correlation": [
+      [
+        1.0,
+        0.9270591977540867,
+        0.9650513904994847
+      ],
+      [
+        0.9270591977540866,
+        1.0,
+        0.9900873129817933
+      ],
+      [
+        0.9650513904994849,
+        0.9900873129817934,
+        1.0
+      ]
+    ],
+    "predictor_order": [
+      "predicted_latency",
+      "flops",
+      "bytes_moved"
+    ],
+    "coefficients_at_zero": [
+      "e_flop"
+    ],
+    "warning": "Predicted latency, FLOPs and logical traffic are strongly correlated; individual coefficients are not well identified."
+  },
+  "fit_split": "Only non-OOM, non-validation rows",
+  "units": {
+    "launch_overhead": "s",
+    "bandwidth": "bytes/s",
+    "throughput": "FLOPs/s",
+    "P0_w": "W",
+    "e_flop": "J/FLOP",
+    "e_byte": "J/byte"
+  }
+}
