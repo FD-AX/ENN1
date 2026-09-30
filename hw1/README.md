@@ -172,15 +172,17 @@ Fitted parameters:
   rest is the baseline. On a 16 GB card the OOM boundary lies outside the prescribed grid, so
   `oom_boundary.png` has no OOM points. Nothing was forced.
 
-`results/figures/`:
+`results/figures/`, in reading order (exact pieces first, fitted pieces next, then residuals and
+their explanation):
 
-- `memory.png`: measured peak vs `memory()` and the runtime-aware estimate (naive 13 B S^2 dotted)
-- `latency.png`, `energy.png`: predicted vs measured and per-S curves over B
-- `validation_error.png`: signed error vs GFLOPs, calibration vs validation
-- `flops.png`: formula vs profiler FLOPs
-- `oom_boundary.png`: predicted memory surface with observed fits/OOMs
-- `regimes.png`: the three latency terms over B*S^2, network arithmetic intensity against the fitted
-  ridge R/BW, and which term is largest at each (S, B)
+1. `flops.png`: the FLOP formula for every S in the grid, with the profiler counts at the traced points
+2. `memory.png`: measured peak vs `memory()` and the runtime-aware estimate (naive 13 B S^2 dotted)
+3. `oom_boundary.png`: predicted memory surface over the grid, observed fits/OOMs, and where `memory()`
+   would reach this GPU's capacity
+4. `latency.png`, `energy.png`: predicted vs measured and per-S curves over B
+5. `validation_error.png`: signed error vs GFLOPs, calibration vs validation
+6. `regimes.png`: the three latency terms over B*S^2, network arithmetic intensity against the fitted
+   ridge R/BW, and which term is largest at each (S, B)
 
 ## Where the equations break
 

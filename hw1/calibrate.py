@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy.optimize import least_squares
 
-from hw1.equations import (bytes_moved, energy, flops, latency, latency_terms, memory,
+from hw1.equations import (PARAMETERS, bytes_moved, energy, flops, latency, latency_terms, memory,
                            memory_naive, memory_runtime_estimate)
 
 
@@ -199,16 +199,22 @@ def make_plots(rows, theta, folder, environment):
     if diagnostic_path.exists():
         diagnostics = [d for d in json.loads(diagnostic_path.read_text()) if d.get('profiler_flops', 0) > 0]
         if diagnostics:
-            fig, ax = plt.subplots(figsize=(7, 4))
-            for i, d in enumerate(diagnostics):
-                batches = np.arange(1, max(d['B'], 4) + 1)
-                ax.plot(batches, flops(d['S'], batches) / 1e9, color=f'C{i}', label=f"Formula S={d['S']}")
-                ax.scatter(d['B'], d['profiler_flops'] / 1e9, color=f'C{i}', marker='x', s=65,
-                           label=f"Profiler S={d['S']}, B={d['B']}")
-            ax.set(xscale='log', yscale='log', xlabel='Batch B (images)', ylabel='Conv/Linear work (GFLOPs)')
-            ax.legend(fontsize=8)
+            fig, ax = plt.subplots(figsize=(7, 4.5))
+            batches = np.arange(1, 257)
+            sizes = np.unique([r['S'] for r in rows])
+            for i, size in enumerate(sizes):
+                ax.plot(batches, flops(size, batches) / 1e9, color=plt.cm.viridis(i / len(sizes)), linewidth=.9)
+                # Neighbouring sizes (256/272, 352/384/400) almost coincide: stagger the labels.
+                ax.annotate(f'S={size}', (batches[-1], flops(size, batches[-1]) / 1e9), fontsize=6.5,
+                            xytext=([3, 25, 47][i % 3], 0), textcoords='offset points', va='center')
+            ax.scatter([d['B'] for d in diagnostics], [d['profiler_flops'] / 1e9 for d in diagnostics],
+                       color='k', marker='x', s=70, zorder=3,
+                       label='torch.profiler, ' + ', '.join(f"({d['S']}, {d['B']})" for d in diagnostics))
+            ax.set(xscale='log', yscale='log', xlabel='Batch B (images)', ylabel='Conv/Linear work (GFLOPs)',
+                   xlim=(0.9, 420), title='Lines: 17712 B S^2 + 313344 B for every S in the grid')
+            ax.legend(fontsize=8, loc='upper left')
             fig.tight_layout()
-            fig.savefig(out / 'flops.png', dpi=160)
+            fig.savefig(out / 'flops.png', dpi=160, bbox_inches='tight')
             plt.close(fig)
             report['flops_profiler'] = metrics(np.array([d['profiler_flops'] for d in diagnostics]),
                                               np.array([d['analytical_flops'] for d in diagnostics]))
@@ -223,13 +229,18 @@ def make_plots(rows, theta, folder, environment):
     ax.scatter(all_s[~oom], all_b[~oom], facecolors='none', edgecolors='k', s=24, label='Measured: fits')
     ax.scatter(all_s[oom], all_b[oom], color='red', marker='x', s=40, label='Measured: OOM')
     total = environment.get('total_memory_bytes')
+    title = 'Analytical memory() and observed outcomes' + ('' if oom.any() else ' (no OOM observed)')
     if total and memory(ss, bb).min() < total < memory(ss, bb).max():
         ax.contour(ss, bb, memory(ss, bb), levels=[total], colors='red', linestyles='--')
-    ax.set(xlabel='Image side S (pixels)', ylabel='Batch B (images)', yscale='log',
-           title='Analytical memory() and observed outcomes' + ('' if oom.any() else ' (no OOM observed)'))
-    ax.legend()
+    elif total:
+        # Where memory() would reach the card: solve 4P + 68 B S^2 = total.
+        reach = (total - 4 * PARAMETERS) / 68
+        title += (f'\nmemory() reaches the {total / 2**30:.1f} GiB of this GPU at B*S^2 = {reach:.2g} '
+                  f'(e.g. S=512, B={reach / 512**2:.0f}); grid maximum is B*S^2 = {(all_b * all_s**2).max():.2g}')
+    ax.set(xlabel='Image side S (pixels)', ylabel='Batch B (images)', yscale='log', title=title)
+    ax.legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), ncol=2)
     fig.tight_layout()
-    fig.savefig(out / 'oom_boundary.png', dpi=160)
+    fig.savefig(out / 'oom_boundary.png', dpi=160, bbox_inches='tight')
     plt.close(fig)
     report['oom'] = {'observed': int(oom.sum()), 'configurations': len(rows),
                      'predicted_over_total_capacity': int(np.sum(memory(all_s, all_b) > total)) if total else None,
@@ -267,9 +278,9 @@ def make_plots(rows, theta, folder, environment):
     axes[2].scatter(all_s[oom], all_b[oom], color='k', marker='x', label='Measured OOM')
     axes[2].set(xlabel='Image side S (pixels)', ylabel='Batch B (images)', yscale='log',
                 title='Largest predicted term per configuration')
-    axes[2].legend(fontsize=8, loc='upper left', framealpha=.9)
+    axes[2].legend(fontsize=8, loc='upper center', bbox_to_anchor=(0.5, -0.16), ncol=2)
     fig.tight_layout()
-    fig.savefig(out / 'regimes.png', dpi=160)
+    fig.savefig(out / 'regimes.png', dpi=160, bbox_inches='tight')
     plt.close(fig)
     report['predicted_regimes'] = {name: int(np.sum(regimes == i))
                                    for i, name in enumerate(['launch', 'memory', 'compute'])}
