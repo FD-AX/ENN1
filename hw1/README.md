@@ -173,17 +173,40 @@ Fitted parameters:
   rest is the baseline. On a 16 GB card the OOM boundary lies outside the prescribed grid, so
   `oom_boundary.png` has no OOM points. Nothing was forced.
 
-`results/figures/`, in reading order (exact pieces first, fitted pieces next, then residuals and
-their explanation):
+### Figures
 
-1. `flops.png`: the FLOP formula for every S in the grid, with the profiler counts at the traced points
-2. `memory.png`: measured peak vs `memory()` and the runtime-aware estimate (naive 13 B S^2 dotted)
-3. `oom_boundary.png`: predicted memory surface over the grid, observed fits/OOMs, and where `memory()`
-   would reach this GPU's capacity
-4. `latency.png`, `energy.png`: predicted vs measured and per-S curves over B
-5. `validation_error.png`: signed error vs GFLOPs, calibration vs validation
-6. `regimes.png`: the three latency terms over B*S^2, network arithmetic intensity against the fitted
-   ridge R/BW, and which term is largest at each (S, B)
+`results/figures/`, in reading order (exact pieces first, fitted pieces next, then residuals and
+their explanation). Every plot shows measured points and the equation together.
+
+**1. FLOPs** — the formula for every S in the grid, with the profiler counts at the traced points.
+
+![FLOPs](results/figures/flops.png)
+
+**2. Memory** — measured peak vs `memory()` and the runtime-aware estimate (naive 13 B S^2 dotted).
+
+![Memory](results/figures/memory.png)
+
+**3. OOM boundary** — predicted memory surface over the grid, observed fits/OOMs, and where `memory()`
+would reach this GPU's capacity.
+
+![OOM boundary](results/figures/oom_boundary.png)
+
+**4. Latency** — predicted vs measured and per-S curves over B.
+
+![Latency](results/figures/latency.png)
+
+**5. Energy** — same layout.
+
+![Energy](results/figures/energy.png)
+
+**6. Validation error** — signed error vs GFLOPs, calibration vs validation.
+
+![Validation error](results/figures/validation_error.png)
+
+**7. Regimes** — the three latency terms over B*S^2, network arithmetic intensity against the fitted
+ridge R/BW, and which term is largest at each (S, B).
+
+![Regimes](results/figures/regimes.png)
 
 ## Where the equations break
 
