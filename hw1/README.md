@@ -1,9 +1,8 @@
 # HW1: cost model of a small CNN
 
 Closed-form FLOPs, peak memory, latency and energy of one FP32 inference forward pass as functions
-of image side S and batch B, checked against measurements on one GPU. Derivations are in
-[derivation_notes.md](derivation_notes.md). `hw1_handwritten.pdf` must be completed separately
-from derivation_notes.md.
+of image side S and batch B, checked against measurements on one GPU. The derivations are
+handwritten in `hw1_handwritten.pdf`.
 
 ## Network
 
@@ -27,7 +26,7 @@ P = 1 040 324 parameters. Weights are random: only inference cost is measured, n
 | `measure.py` | CUDA-only sweep over the 132-point grid, writes `results/measurements.csv` |
 | `calibrate.py` | fits theta on calibration rows, writes `theta.json`, `metrics.json`, `figures/*.png` |
 | `test_equations.py` | CPU checks: layer-by-layer FLOPs, parameter count, peak stage, broadcasting |
-| `derivation_notes.md` | formulas to copy into the handwritten PDF |
+| `hw1_handwritten.pdf` | handwritten derivations: resolution, FLOPs, parameters, peak memory, bytes moved, latency and energy equations with the fitted values |
 | `results/` | `measurements.csv`, `theta.json`, `metrics.json`, `environment.json`, `profiler_flops.json`, `figures/*.png` from the run described below |
 
 All equation functions take scalars or NumPy arrays and broadcast, e.g. `flops(S[:, None], B[None, :])`.
@@ -91,7 +90,9 @@ OOM rows are excluded from all fits.
 - **Profiler.** `--traces` exports Chrome traces (CPU+CUDA, `with_flops`, `record_shapes`,
   `profile_memory`, forward under `record_function("FWD")`) for the smallest, a middle and the
   largest feasible configuration. The traces help diagnose the latency regimes. The regime labels themselves come from the fitted
-  model's terms, and the traces are not the official timing.
+  model's terms, and the traces are not the official timing. The trace files themselves are not committed (size); the
+  FLOP and MaxPool-allocation checks extracted from them are in `results/profiler_flops.json`, and
+  `python -m hw1.measure --traces` regenerates them.
 
 ## Analytical models
 
@@ -150,7 +151,7 @@ for the 69 validation rows (`results/metrics.json`, `results/theta.json`).
 | quantity | calibration MedAPE | validation MedAPE | validation RMSE |
 |---|---|---|---|
 | FLOPs vs profiler (3 traced points) | exact match | - | 0 |
-| `memory()` (analytical) | 25.3 % | 7.5 % | 16.3 MiB |
+| `memory()` (analytical only, no fitted parameters) | 25.3 % | 7.5 % | 16.3 MiB |
 | `memory()` + measured baseline (diagnostic) | 0.0 % | 0.08 % | 11.7 MiB |
 | latency | 15.9 % | 11.1 % | 2.15 ms |
 | energy | 4.3 % | 6.1 % | 0.54 J |
