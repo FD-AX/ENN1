@@ -1,0 +1,11 @@
+{
+  "paper_url": "https://arxiv.org/pdf/2411.09009v2",
+  "paper_sha256": "19026f0d3f943c7b47e50f27a0c3319aec809ed2f22ad11df0419b67b53947c7",
+  "presentation_input": "cce_presentation_12slides.html",
+  "presentation_input_sha256": "2ba1b0a50e1de7e7d88537caedaa3f63623ac27e52932fb72fb852c0a1e6525f",
+  "selection_source": "Papers to reproduce (1).xlsx",
+  "selected_title": "CUT YOUR LOSSES IN LARGE-VOCABULARY LANGUAGE MODELS",
+  "report_reference_remote_commit": "700f5a57aae853c92cc186b46c8737183202e8ec",
+  "seminar_source": "triton_seminar.ipynb",
+  "seminar_sha256": "ea074d63616c34f826c9df677c98de1360f4d1605bd2fac57a555428406a93ce"
+}

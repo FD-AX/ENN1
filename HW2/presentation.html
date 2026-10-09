@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cut Cross-Entropy — paper walkthrough</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>window.MathJax={tex:{inlineMath:[['\\(','\\)']],displayMath:[['\\[','\\]']]},svg:{fontCache:'global'}};</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+:root{--bg:#f2f0eb;--ink:#111;--muted:#626262;--line:rgba(17,17,17,.18);--red:#e30613;--green:#087f5b;--blue:#0057b8;--pad:clamp(2.4rem,4.8vw,5rem)}
+*{box-sizing:border-box;margin:0;padding:0}html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif}body:before{content:"";position:fixed;left:0;right:0;top:0;height:7px;background:var(--red);z-index:50}.deck{width:100%;height:100%;position:relative}.slide{position:absolute;inset:0;display:none;flex-direction:column;padding:clamp(2.35rem,4.3vh,3.7rem) var(--pad) 4.9rem;background:linear-gradient(125deg,rgba(255,255,255,.45),transparent 45%);opacity:0;transform:translateY(8px)}.slide.active{display:flex;opacity:1;transform:none;animation:rise .3s ease both}@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.top{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding-bottom:.7rem;border-bottom:1px solid #111;margin-bottom:clamp(1rem,2.2vh,1.65rem);font:700 .66rem/1 JetBrains Mono,monospace;letter-spacing:.14em;text-transform:uppercase;color:#444}.hero{font-size:clamp(4.2rem,9.6vw,9.2rem);font-weight:800;line-height:.82;letter-spacing:-.087em;margin:.2rem 0 1rem}.hero .cut{color:var(--red)}h1{font-size:clamp(2.65rem,4.9vw,4.8rem);line-height:.99;letter-spacing:-.058em;max-width:18ch;margin-bottom:clamp(1rem,2.2vh,1.6rem)}h1.wide{max-width:23ch}.lede{font-size:clamp(1.08rem,1.7vw,1.48rem);line-height:1.44;max-width:54ch;color:#4f4f4f}.lede strong{color:var(--ink)}.kicker{font:700 .68rem/1 JetBrains Mono,monospace;color:var(--red);letter-spacing:.13em;text-transform:uppercase;margin-bottom:.65rem}.cols2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.8rem,4vw,4.5rem);flex:1;min-height:0}.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(1.4rem,2.8vw,3.2rem);flex:1;min-height:0}.section{padding-top:.95rem;border-top:3px solid #111}.section.redline{border-color:var(--red)}.section h2{font-size:clamp(1.3rem,2vw,1.82rem);line-height:1.14;letter-spacing:-.034em;margin:.1rem 0 .6rem}.section p,.section li{font-size:clamp(.9rem,1.12vw,1.04rem);line-height:1.43;color:#555}.section ul{list-style:none;display:grid;gap:.45rem;margin-top:.6rem}.section li{padding-left:.9rem;position:relative}.section li:before{content:"";position:absolute;left:0;top:.62em;width:.3rem;height:.3rem;background:var(--red)}
+.flow{display:grid;grid-template-columns:repeat(5,1fr);gap:1.15rem;align-items:stretch;margin-top:1.2rem}.node{position:relative;border-top:3px solid #111;padding:.85rem .3rem 0 0;min-height:8.5rem}.node:not(:last-child):after{content:"→";position:absolute;right:-.95rem;top:2.25rem;color:var(--red);font:bold 1.15rem JetBrains Mono}.node .n{font:700 .66rem JetBrains Mono;color:var(--red);letter-spacing:.1em}.node .t{font-size:clamp(1.02rem,1.45vw,1.3rem);font-weight:800;line-height:1.15;margin:.35rem 0}.node .d{font-size:.86rem;line-height:1.32;color:#666}
+.formula-stage{flex:1;display:grid;place-items:center;text-align:center}.eq{font-size:clamp(1.55rem,2.7vw,2.7rem);max-width:100%}.explain{margin-top:1.15rem;color:#555;font-size:clamp(.96rem,1.25vw,1.14rem);line-height:1.43;max-width:68ch}.foot{margin-top:auto;padding-top:.7rem;border-top:1px solid rgba(17,17,17,.3);font-size:clamp(.7rem,.86vw,.82rem);line-height:1.35;color:#666}.foot strong{color:#111}.paper-note{font-family:JetBrains Mono,monospace;color:#555}.paper-note .red{color:var(--red)}
+.big{font-size:clamp(3.1rem,6.4vw,6rem);font-weight:800;letter-spacing:-.07em;line-height:.9}.big.red{color:var(--red)}.strip{display:grid;grid-template-columns:repeat(4,1fr);background:#111;color:#fff;margin-top:1.25rem}.strip>div{padding:.9rem 1.1rem;border-right:1px solid rgba(255,255,255,.2)}.strip>div:last-child{border-right:0}.strip .v{font-size:clamp(1.55rem,2.8vw,2.6rem);font-weight:800;letter-spacing:-.05em}.strip .l{font-size:.78rem;line-height:1.3;color:#ddd;margin-top:.3rem}.red{color:var(--red)}.green{color:#69e5b1}.blue{color:var(--blue)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:2rem;flex:1;min-height:0}.side{border-top:4px solid #111;padding-top:.95rem}.side.cce{border-color:var(--red)}.side h2{font-size:clamp(1.55rem,2.5vw,2.35rem);letter-spacing:-.04em;margin-bottom:.8rem}.stack{display:grid;gap:.35rem}.step{display:grid;grid-template-columns:2rem 1fr;gap:.7rem;align-items:start;padding:.6rem 0;border-bottom:1px solid var(--line)}.step b{font:700 .7rem JetBrains Mono;color:var(--red)}.step span{font-size:clamp(.9rem,1.05vw,1.02rem);line-height:1.35;color:#4f4f4f}.takeaway{margin-top:auto;padding-top:.9rem;border-top:4px solid var(--red);font-size:clamp(1.2rem,1.8vw,1.7rem);font-weight:700;line-height:1.28;letter-spacing:-.025em}.takeaway em{font-style:normal;color:var(--red)}
+.paper-figure{flex:1;min-height:0;border:1px dashed #8f8a82;background:rgba(255,255,255,.38);display:grid;place-items:center;text-align:center;padding:1.5rem}.paper-figure .tag{font:700 .72rem JetBrains Mono;letter-spacing:.12em;text-transform:uppercase;color:var(--red)}.paper-figure h2{font-size:clamp(1.7rem,3vw,3rem);letter-spacing:-.045em;margin:.6rem 0}.paper-figure p{max-width:55ch;color:#666;line-height:1.4}.proof{flex:1;border:2px dashed #9b978f;background:rgba(255,255,255,.38);display:grid;place-items:center;text-align:center;padding:1.7rem}.proof .ph{font:700 .72rem JetBrains Mono;letter-spacing:.12em;color:#777;text-transform:uppercase}.proof h2{font-size:clamp(1.8rem,3.2vw,3.25rem);letter-spacing:-.05em;margin:.6rem 0}.proof p{color:#666;max-width:52ch;line-height:1.42}.nav{position:fixed;left:0;right:0;bottom:0;height:3.6rem;background:rgba(242,240,235,.94);backdrop-filter:blur(8px);border-top:1px solid var(--line);display:flex;align-items:center;gap:1rem;padding:0 var(--pad);z-index:20}.progress{height:2px;background:rgba(17,17,17,.13);flex:1;max-width:300px}.progress i{display:block;height:100%;background:var(--red);width:0}.counter{font:600 .71rem JetBrains Mono;color:#666}.nav button{border:1px solid #aaa;background:transparent;padding:.35rem .65rem;font:600 .8rem Manrope;cursor:pointer}.notes{position:fixed;right:1rem;bottom:4.2rem;width:min(420px,calc(100vw - 2rem));max-height:45vh;overflow:auto;background:#111;color:#eee;padding:1rem 1.15rem;z-index:30;display:none}.notes.open{display:block}.notes h3{font:700 .72rem JetBrains Mono;color:#ff6670;letter-spacing:.12em;text-transform:uppercase;margin-bottom:.5rem}.notes p{font-size:.9rem;line-height:1.45;color:#ddd}@media(max-width:980px){.cols2,.cols3,.compare,.flow{grid-template-columns:1fr}.slide{overflow:auto}.node:after{display:none}.strip{grid-template-columns:1fr 1fr}}
+
+    @media print {
+      @page { size: 1600px 1000px; margin: 0; }
+      html,body { width:1600px;height:auto;overflow:visible;print-color-adjust:exact;-webkit-print-color-adjust:exact; }
+      body:before,.nav,.notes { display:none!important; }
+      .deck { height:auto; }
+      .slide,.slide.active { display:flex!important;position:relative;inset:auto;width:1600px;height:1000px;
+        opacity:1;transform:none;animation:none;break-after:page;padding:48px 70px 45px;overflow:hidden; }
+      .slide:last-child { break-after:auto; }
+      .cols2,.compare { grid-template-columns:1fr 1fr!important; }
+      .cols3 { grid-template-columns:repeat(3,1fr)!important; }
+      .flow { grid-template-columns:repeat(5,1fr)!important; }
+      .strip { grid-template-columns:repeat(4,1fr)!important; }
+      h1 { font-size:62px; } .hero { font-size:130px; }
+      .section p,.section li { font-size:20px; } .foot { font-size:15px; }
+    }
+    </style>
+</head>
+<body><div class="deck">
+<section class="slide active" data-section="main" data-notes="Титул без обещания результатов. Формулировка следует abstract статьи: CCE вычисляет cross-entropy без материализации logits для всех token–vocabulary pairs в global memory.">
+  <div class="top"><span>Efficient Models · HW2 · paper reproduction</span><span>ICLR 2025</span></div>
+  <div class="hero"><span class="cut">Cut</span> Cross-Entropy</div>
+  <div class="lede"><strong>Cut Your Losses in Large-Vocabulary Language Models</strong><br>Erik Wijmans · Brody Huval · Alexander Hertzberg · Vladlen Koltun · Philipp Krähenbühl · Apple</div>
+  <div class="cols3" style="margin-top:2rem;flex:0">
+    <div class="section"><div class="kicker">problem</div><h2>Large-vocabulary CE</h2><p>Cross-entropy строит score для каждой пары «training token × vocabulary item».</p></div>
+    <div class="section"><div class="kicker">paper question</div><h2>Нужна ли полная logit matrix?</h2><p>Авторы исследуют classifier head и вычисление loss, а не transformer backbone.</p></div>
+    <div class="section redline"><div class="kicker">proposal</div><h2>CCE</h2><p>Correct-token logit вычисляется отдельно, log-sum-exp — on the fly.</p></div>
+  </div>
+  <div class="foot paper-note">Wijmans et al., ICLR 2025 · HW2 · локальное воспроизведение classifier-head CCE</div>
+</section>
+
+<section class="slide" data-section="main" data-notes="Прямо §3 paper: autoregressive distribution = backbone f + linear classifier C. Это единственный архитектурный контекст, который нам нужен до CE.">
+  <div class="top"><span>01 · preliminaries</span><span>§3 · Eq. (1–2)</span></div>
+  <h1 class="wide">Где находится Cross-Entropy?</h1>
+  <div class="flow">
+    <div class="node"><div class="n">01</div><div class="t">Tokens</div><div class="d">Последовательность из vocabulary \(V\).</div></div>
+    <div class="node"><div class="n">02</div><div class="t">Backbone \(f\)</div><div class="d">Строит feature vector контекста.</div></div>
+    <div class="node"><div class="n">03</div><div class="t">Embedding \(E_i\)</div><div class="d">\(E_i=f(x_{&lt;i})\in\mathbb{R}^{D}\).</div></div>
+    <div class="node"><div class="n">04</div><div class="t">Classifier \(C\)</div><div class="d">\(C\in\mathbb{R}^{D\times |V|}\).</div></div>
+    <div class="node"><div class="n">05</div><div class="t">Softmax / CE</div><div class="d">Вероятность правильного next token.</div></div>
+  </div>
+  <div class="formula-stage" style="margin-top:1.2rem;min-height:0;flex:0"><div><div class="eq" style="font-size:clamp(1.35rem,2.2vw,2rem)">\[P(x_i\mid x_{&lt;i})=\mathrm{softmax}_{x_i}\!\left(C^{\top}E_i\right)\]</div></div></div>
+  <div class="foot"><strong>Paper wording:</strong> classifier projects a \(D\)-dimensional feature vector into the output space of vocabulary \(V\). Наше пояснение: для Transformer \(E_i\) — hidden state после backbone.</div>
+</section>
+
+<section class="slide" data-section="main" data-notes="Объединяем training-vs-inference и logit-matrix problem в один слайд. Основной тезис прямо из §3.2 (PDF, стр. 3–4): при training все next-token predictions считаются совместно, а log-probability matrix растёт как N×|V|.">
+  <div class="top"><span>02 · problem</span><span>§3.2 · PDF стр. 3–4</span></div>
+  <h1 class="wide">На training появляется матрица \(|V|\times N\)</h1>
+  <div class="cols2">
+    <div class="section"><div class="kicker">paper setup</div><h2>Teacher forcing</h2><p>Backbone эффективно вычисляет \(E_1,\dots,E_N\) параллельно, а classifier выдаёт scores для каждого training token по всему vocabulary.</p><div class="formula" style="margin-top:1rem">\[E=[E_1\dots E_N],\qquad A=C^{\top}E\in\mathbb{R}^{|V|\times N}\]</div></div>
+    <div class="paper-figure"><img src="figures/paper_figure1.png" alt="Figure 1 from Wijmans et al.: memory composition and attainable batch sizes" style="width:100%;max-height:100%;object-fit:contain"></div>
+  </div>
+  <div class="foot"><strong>Paper §3.2:</strong> inference требует distribution для одного token at a time; training оптимизирует все next-token predictions совместно. <strong>§3.2, стр. 4:</strong> для Gemma 2 2B log-probabilities достигают 89% training memory в их setup.</div>
+</section>
+
+<section class="slide" data-section="main" data-notes="Центральная Eq. (4). Здесь не рассказываем свой softmax tutorial в основной области; только decomposition, которую используют авторы. Наша algebraic intuition вынесена вниз.">
+  <div class="top"><span>03 · key reformulation</span><span>§4 · Eq. (4)</span></div>
+  <h1 class="wide">Loss раскладывается на два вычисления</h1>
+  <div class="formula-stage"><div>
+    <div class="eq">\[\ell=\left(C^{\top}E\right)_{x}-\log\sum_j\exp\!\left(C_j^{\top}E\right)\]</div>
+    <div class="explain"><strong>1.</strong> score только ground-truth labels    <strong>2.</strong> log-sum-exp по всему vocabulary</div>
+  </div></div>
+  <div class="cols2" style="margin-top:1.1rem;flex:0">
+    <div class="section"><div class="kicker">term A</div><h2>Indexed matrix multiplication</h2><p>Нужны только \(N\) correct-token scores.</p></div>
+    <div class="section redline"><div class="kicker">term B</div><h2>Linear log-sum-exp</h2><p>Нормализатор учитывает весь vocabulary, но не обязан сохранять все logits.</p></div>
+  </div>
+  <div class="foot"><strong>Наша сноска:</strong> это обычный log-softmax правильного класса: \(\log p_y=z_y-\log\sum_j e^{z_j}\). Paper максимизирует log-likelihood; стандартный CE меняет знак.</div>
+</section>
+
+<section class="slide" data-section="main" data-notes="§4.1 paper. Важно: CCE не строит весь classifier output ради target term. Kernel indexed-loads нужную колонку C и делает dot product с E_i.">
+  <div class="top"><span>04 · CCE part A</span><span>§4.1 · Fig. 2a</span></div>
+  <h1 class="wide">Indexed matmul: вычислить только correct-token logits</h1>
+  <div class="compare">
+    <div class="side"><h2>Полный classifier output</h2><div class="stack"><div class="step"><b>01</b><span>Для каждого \(E_i\) вычислить scores для всех \(|V|\) columns \(C_j\).</span></div><div class="step"><b>02</b><span>Потом выбрать score \(C_{x_i}^{\top}E_i\).</span></div></div></div>
+    <div class="side cce"><h2>Paper §4.1</h2><div class="stack"><div class="step"><b>01</b><span>Прочитать target id \(x_i\).</span></div><div class="step"><b>02</b><span>Загрузить только column \(C_{x_i}\) и embedding \(E_i\).</span></div><div class="step"><b>03</b><span>Сразу выполнить dot product.</span></div></div></div>
+  </div>
+  <div class="takeaway">Forward indexed matmul использует on-chip SRAM и не аллоцирует отдельную \(|V|\times N\) матрицу.</div>
+  <div class="foot">Paper §4.1: операции выполняются blockwise для эффективности cache; Algorithm 1 / Figure 2a описывают access pattern.</div>
+</section>
+
+<section class="slide" data-section="main" data-notes="§4.2 + Fig.2b. Главный forward mechanism: same blocking strategy as matmul, но каждый block сразу редуцируется по vocabulary и обновляет LSE.">
+  <div class="top"><span>05 · CCE part B</span><span>§4.2 · Fig. 2b</span></div>
+  <h1 class="wide">Linear-log-sum-exp: block matmul → block LSE → update</h1>
+  <div class="compare">
+    <div class="side"><h2>Regular path</h2><div class="stack"><div class="step"><b>01</b><span>GEMM строит \(A=C^{\top}E\).</span></div><div class="step"><b>02</b><span>Blocks результата пишутся в global memory.</span></div><div class="step"><b>03</b><span>Отдельная reduction читает \(A\) и считает LSE.</span></div></div></div>
+    <div class="side cce"><h2>CCE forward</h2><div class="stack"><div class="step"><b>01</b><span>Block matmul \(C_m^{\top}E_n\) в SRAM.</span></div><div class="step"><b>02</b><span>Сразу LSE вдоль vocabulary-range блока.</span></div><div class="step"><b>03</b><span>Partial LSE обновляет общий \(LSE_n\).</span></div><div class="step"><b>04</b><span>Полный \(A\) не материализуется.</span></div></div></div>
+  </div>
+  <div class="foot"><strong>Paper §4.2:</strong> CCE использует ту же blocking/parallelization strategy, что и efficient matmul. <strong>Наша сноска:</strong> stable online LSE хранит running scale/max и сумму, поэтому промежуточные logits можно отбросить после reduction.</div>
+</section>
+
+<section class="slide" data-section="main" data-notes="Формула G использует mean reduction без ignored labels; общий masked случай выведен в отчёте. Filtering проверяется по ошибкам. Мы не измеряли число пропущенных blocks.">
+    <div class="top"><span>06 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
+    <h1 class="wide">Backward: формула и приближение</h1>
+    <div class="cols2">
+    <div class="section"><div class="kicker">algebra</div><h2>Восстановить probabilities</h2>
+    <p>Оси PyTorch на этом слайде: E — N×D, C — V×D. Y — one-hot targets, P — N×V.</p>
+    <p>Для каждого блока повторно вычисляются logits. Сохранённый LSE используется для нормализации.</p>
+    <div class="eq" style="font-size:1.5rem">\[P_{ij}=\exp(Z_{ij}-s_i)\]</div>
+    <div class="eq" style="font-size:1.5rem">\[G=(P-Y)/N,\quad \nabla_E=GC,\quad\nabla_C=G^\top E\]</div></div>
+    <div class="section redline"><div class="kicker">implementation</div><h2>Filtering — отдельная настройка</h2>
+    <p>В выбранном commit BF16 auto threshold = 2⁻¹². Проверка блока находится в cce_backward.py. Это не минимальное представимое число BF16 и не доказательство нулевой ошибки.</p>
+    <p style="margin-top:1rem">Сравниваем default, no-filter и exact; публикуем ошибки loss и обоих gradients.</p></div></div>
+    <div class="foot">Формулы: REPORT.md §5, при N валидных токенах. Код: upstream 3de376c, cce_backward.py и utils.py. Измерения: results/main/correctness.json.</div></section>
+
+<section class="slide" data-section="main" data-notes="Summary только после того, как механизм показан. Формулировки привязаны к paper: loss definition та же, различается организация вычисления и материализация промежуточного classifier output.">
+  <div class="top"><span>07 · CE vs CCE</span><span>summary</span></div>
+  <h1 class="wide">Один objective — разный dataflow</h1>
+  <div class="compare">
+    <div class="side"><h2>Standard linear + CE</h2><div class="stack"><div class="step"><b>01</b><span>Вычислить \(A=C^{\top}E\).</span></div><div class="step"><b>02</b><span>Материализовать \(|V|\times N\) output.</span></div><div class="step"><b>03</b><span>Получить target log-probabilities / CE.</span></div></div></div>
+    <div class="side cce"><h2>Cut Cross-Entropy</h2><div class="stack"><div class="step"><b>01</b><span>Correct-token term: indexed matmul.</span></div><div class="step"><b>02</b><span>Normalizer: blockwise linear-LSE.</span></div><div class="step"><b>03</b><span>Backward: recompute + gradient filtering.</span></div></div></div>
+  </div>
+  <div class="takeaway">Ключевой claim paper: нет необходимости материализовать полную logit matrix в GPU global memory.</div>
+  <div class="foot">Важно для защиты: CCE не уменьшает vocabulary и не меняет training objective. Он меняет реализацию classifier-head cross-entropy.</div>
+</section>
+
+<section class="slide" data-section="main" data-notes="Один слайд результатов статьи. Отделяем результаты статьи от локального эксперимента. Числа 24GB→1MB и 28GB→1GB прямо из abstract.">
+  <div class="top"><span>08 · paper results</span><span>paper claims, not ours</span></div>
+  <h1 class="wide">Что получили авторы</h1>
+  <div class="strip"><div><div class="v red">24 GB</div><div class="l">Gemma 2 2B · regular loss computation</div></div><div><div class="v">→</div><div class="l">CCE</div></div><div><div class="v green">1 MB</div><div class="l">CCE loss computation</div></div><div><div class="v">28 GB → 1 GB</div><div class="l">classifier-head training memory</div></div></div>
+  <div class="cols3" style="margin-top:1.3rem;flex:0">
+    <div class="section"><div class="kicker">memory</div><h2>Negligible CE footprint</h2><p>Главный эффект paper.</p></div>
+    <div class="section"><div class="kicker">batch size</div><h2>1.5×–10× larger</h2><p>В их 16×80GB FSDP setup, exact values — Table A4.</p></div>
+    <div class="section redline"><div class="kicker">training</div><h2>No reported loss in convergence</h2><p>Paper сравнивает training curves; Figure 4.</p></div>
+  </div>
+  <div class="foot">Sources in paper: Abstract, Figure 1, Table 1, Figure 4, Appendix Table A4. На этом слайде только результаты авторов.</div>
+</section>
+
+<section class="slide" data-section="main" data-notes="Измеряем classifier head без backbone. Не воспроизводим полный training campaign. Source commit закреплён; Windows adapter меняет только определение версии Triton и путь cache.">
+    <div class="top"><span>09 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
+    <h1 class="wide">Что мы воспроизводим</h1>
+    <div class="cols3">
+    <div class="section"><div class="kicker">correctness</div><h2>60 проверок</h2><p>Loss, ∇E, ∇C против FP64. Три seed, tail blocks, ignore labels, softcap. Допуски: Δloss &lt; 0.05; relL2 &lt; 5%.</p></div>
+    <div class="section"><div class="kicker">measurement</div><h2>11 shapes · 88 строк</h2><p>Sweep N, V, D. Четыре метода; forward и forward + backward. 5 warmup + 30 timing samples.</p></div>
+    <div class="section redline"><div class="kicker">ablation</div><h2>Filtering / accumulation</h2><p>CCE, no-filter, exact; дополнительная серия с FP32 accumulation и отдельным backward.</p></div></div>
+    <div class="strip"><div><div class="v">5070 Ti</div><div class="l">16 GB · Windows</div></div><div><div class="v">2.11.0</div><div class="l">PyTorch · CUDA 12.8</div></div><div><div class="v">3.6.0</div><div class="l">Triton Windows</div></div><div><div class="v">3de376c</div><div class="l">upstream commit · BF16</div></div></div>
+    <div class="foot">Синтетические независимые E и C; seed 42; TF32 off. Extra peak = max allocated − allocated before. Команда: python -m HW2.experiment --output HW2/results/repeat</div></section>
+
+<section class="slide" data-section="main" data-notes="44.83 раза — отношение дополнительной памяти, а не полной VRAM. Градиенты входят в extra peak. Полный allocated peak сокращается в 20.65 раза. Полосы — p10–p90 повторений, не доверительный интервал.">
+    <div class="top"><span>10 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
+    <h1 class="wide">Наши измеренные результаты</h1>
+    <div class="strip"><div><div class="v">44.83×</div><div class="l">меньше extra peak: 3072.00 → 68.53 MiB</div></div><div><div class="v">1.62×</div><div class="l">быстрее: 22.71 → 14.03 ms</div></div><div><div class="v">60/60</div><div class="l">проверок в допусках</div></div><div><div class="v">0.822%</div><div class="l">max relL2 ∇E для CCE vs FP64</div></div></div>
+    <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center"><img src="figures/scaling_n.png" alt="Measured memory and runtime versus token count" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+    <div class="foot"><strong>Числа сверху:</strong> N=4096, V=65536, D=512, BF16, forward+backward. График: V=65536, D=512, sweep N. Полный allocated peak: 3156.28 → 152.81 MiB (20.65×). results/main/measurements.json</div></section>
+
+<section class="slide" data-section="main" data-notes="Сравнение CCE с exact одновременно меняет filtering и accumulation. Даже переключение filter_eps меняет также sorting, поэтому отдельный вклад пороговой проверки не измерен.">
+    <div class="top"><span>11 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
+    <h1 class="wide">Выводы в пределах измерений</h1>
+    <div class="cols3">
+    <div class="section"><div class="kicker">measured</div><h2>Память в большой точке</h2><p>CCE: extra peak 68.53 MiB против 3072 MiB у baseline. Размер BF16 градиентов по формуле: 68 MiB.</p></div>
+    <div class="section"><div class="kicker">depends on shape</div><h2>Ускорение не универсально</h2><p>При N=1024, V=65536, D=2048: 13.69 ms CCE против 12.18 ms baseline. CCE медленнее на 12.3%.</p></div>
+    <div class="section redline"><div class="kicker">limits</div><h2>Границы проверки</h2><p>В дополнительной синтетической серии no-filter быстрее default. Toy loss после 100 updates — 3.6005. LLM convergence и perplexity не проверялись.</p></div></div>
+    <div class="takeaway">В измеренной большой точке CCE использует меньше памяти и времени. При D=2048 CCE default медленнее baseline. Причины разницы runtime отдельно не установлены.</div>
+    <div class="foot"><a href="REPORT.md">REPORT.md</a> · <a href="REPORT.md#synthetic-tables">Таблицы отчёта</a> · <a href="REPORT.md#speaker-notes">Заметки для защиты</a> · upstream 3de376c106a1916bc5e1b619f9c77c87a461ee1c</div></section>
+
+<!-- APPENDIX -->
+<section class="slide" data-section="appendix" data-notes="Наш учебный numerical example. Не выдавать за материал paper; нужен только если попросят объяснить механику CE на числах.">
+  <div class="top"><span>Appendix A1</span><span>our explanation</span></div>
+  <h1 class="wide">Численный пример: почему не нужен полный softmax output</h1>
+  <div class="formula-stage"><div><div class="eq">\[L=-z_y+\log\sum_j e^{z_j}\]</div><div class="explain">Пример: scores [2, 1, 0], target=0. LSE ≈ 2.407606; loss ≈ 0.407606; p(target) ≈ 0.665241. Для loss достаточно target score и normalizer.</div></div></div>
+  <div class="foot"><strong>Не из paper:</strong> pedagogical example / derivation для вопросов после доклада.</div>
+</section>
+
+<section class="slide" data-section="appendix" data-notes="Наша вспомогательная derivation stable LSE. Основная дека только ссылается на online LSE в footnote.">
+  <div class="top"><span>Appendix A2</span><span>our derivation</span></div>
+  <h1 class="wide">Stable / online log-sum-exp</h1>
+  <div class="formula-stage"><div><div class="eq">\[\mathrm{LSE}(z)=m+\log\sum_j e^{z_j-m},\qquad m=\max_j z_j\]</div><div class="explain">Partial reductions можно объединять без сохранения полного вектора logits.</div></div></div>
+  <div class="foot">Paper использует online/blockwise LSE; эта алгебраическая расшифровка — наша поясняющая выкладка.</div>
+</section>
+
+<section class="slide" data-section="appendix" data-notes="Время CUDA events может включать ожидание kernels с CPU. Частоты не фиксировались; одна GPU и один запуск grid. Повторы не являются независимыми обучениями.">
+    <div class="top"><span>A3 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
+    <h1 class="wide">Как измеряли</h1>
+    <div class="cols2"><div class="section"><h2>Память</h2><ul><li>Входы созданы до измерения.</li><li>После warmup: loss удалён, grads=None.</li><li>Сохранён baseline allocated.</li><li>Reset peak → один проход → synchronize.</li><li>Extra = peak − baseline; gradients включены.</li></ul></div>
+    <div class="section redline"><h2>Время</h2><ul><li>5 warmup; компиляция вне samples.</li><li>30 CUDA-event samples; median и p10–p90.</li><li>Порядок методов чередуется между shapes.</li><li>Forward с autograd; total включает backward.</li><li>Backward-only: свежий graph до start event.</li></ul></div></div>
+    <div class="foot">Точная среда: results/main/environment.json. Все samples: measurements.json. Дополнительный backward: results/diagnostics/diagnostics.json. TF32 disabled; BF16 inputs.</div></section>
+
+<section class="slide" data-section="appendix" data-notes="Мы наблюдаем allocations, kernels и их durations. Причинный вклад sorting в разницу runtime не установлен. Первоначальный small baseline 4.228 ms не воспроизведён; повторные trials дают около 0.3 ms.">
+    <div class="top"><span>A4 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
+    <h1 class="wide">Что видно в profiler</h1>
+    <div style="flex:1;min-height:0;display:flex;align-items:center"><img src="figures/profiler_breakdown.png" alt="Measured CUDA kernel durations and allocation timeline" style="width:100%;max-height:100%;object-fit:contain"></div>
+    <div class="takeaway">Baseline: allocations по 1 GiB. CCE default: крупнейший allocation 64 MiB. Sorting kernels есть в default и отсутствуют в no-filter.</div>
+    <div class="foot">N=4096,V=65536,D=512. Три iterations под profiler, не обычный latency benchmark. Трассы: results/profiles/*.trace.json.gz; PROFILING.md. Доля skipped tiles и DRAM counters не измерены.</div></section>
+<section class="slide" data-section="appendix" data-notes="Pretrained модель использована для extraction, backbone не обучался. Время backbone исключено. Default CCE 31.88 ms, no-filter 59.36 ms на N1024. Причинный вклад sparsity не измерен. Проверка gradients — FP32 reference на первых 32 позициях, полном vocabulary.">
+    <div class="top"><span>A5 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
+    <h1 class="wide">Gemma 2 2B / Alpaca</h1>
+    <div class="strip"><div><div class="v">3.09×</div><div class="l">меньше extra peak: 3500.00 → 1132.73 MiB</div></div><div><div class="v">1.97×</div><div class="l">меньше времени: 62.75 → 31.88 ms</div></div><div><div class="v">38</div><div class="l">измеренных строк; 2 planned skips</div></div><div><div class="v">5/5</div><div class="l">checks на N=32 против FP32</div></div></div>
+    <div style="flex:1;min-height:0;display:flex;align-items:center"><img src="figures/gemma2_scaling.png" alt="Measured real Gemma classifier-head memory and runtime" style="width:100%;max-height:100%;object-fit:contain"></div>
+    <div class="foot"><strong>Числа сверху:</strong> N=1024,V=256000,D=2304, BF16, softcap=30, forward+backward. 52 примера, 8192 валидные позиции. Baseline при N=8192 не запускался. GEMMA_REPORT.md; results/gemma2/.</div></section>
+</div>
+<div class="nav"><span class="counter" id="counter">01 / 12</span><div class="progress"><i id="bar"></i></div><span class="counter">← → · N notes</span><button id="prev">←</button><button id="next">→</button><button id="notesBtn">N</button></div>
+<div class="notes" id="notes"><h3>Speaker notes</h3><p id="notesText"></p></div>
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const mainSlides=slides.filter(s=>s.dataset.section==='main');
+const appendixSlides=slides.filter(s=>s.dataset.section==='appendix');
+let i=0;
+const c=document.getElementById('counter'),bar=document.getElementById('bar'),notes=document.getElementById('notes'),nt=document.getElementById('notesText');
+function show(n){
+  i=(n+slides.length)%slides.length;
+  slides.forEach((s,j)=>s.classList.toggle('active',j===i));
+  const s=slides[i];
+  if(s.dataset.section==='appendix'){
+    const ai=appendixSlides.indexOf(s)+1;
+    c.textContent='A'+ai+' / A'+appendixSlides.length;
+  } else {
+    const mi=mainSlides.indexOf(s)+1;
+    c.textContent=String(mi).padStart(2,'0')+' / '+String(mainSlides.length).padStart(2,'0');
+  }
+  bar.style.width=((i+1)/slides.length*100)+'%';
+  nt.textContent=s.dataset.notes||'—';
+  if(window.MathJax?.typesetPromise) MathJax.typesetPromise([s]);
+}
+document.getElementById('next').onclick=()=>show(i+1);
+document.getElementById('prev').onclick=()=>show(i-1);
+document.getElementById('notesBtn').onclick=()=>notes.classList.toggle('open');
+addEventListener('keydown',e=>{if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(i+1)}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}if(e.key.toLowerCase()==='n')notes.classList.toggle('open');if(e.key==='Escape')notes.classList.remove('open')});
+show(0);
+</script>
+</body></html>
