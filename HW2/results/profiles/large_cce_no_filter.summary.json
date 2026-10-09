@@ -1,0 +1,2258 @@
+{
+  "categories": {
+    "user_annotation": 12,
+    "cpu_op": 210,
+    "fwdbwd": 6,
+    "cpu_instant_event": 94,
+    "python_function": 2062,
+    "overhead": 1,
+    "kernel": 51,
+    "ac2g": 134,
+    "cuda_runtime": 74,
+    "gpu_memcpy": 3,
+    "cuda_driver": 6,
+    "gpu_user_annotation": 6,
+    "": 11,
+    "Trace": 1
+  },
+  "kernels": [
+    {
+      "name": "_cce_backward_kernel",
+      "calls": 3,
+      "total_us": 29701.936999999998,
+      "min_us": 9899.579,
+      "max_us": 9902.651
+    },
+    {
+      "name": "_cce_lse_forward_kernel",
+      "calls": 3,
+      "total_us": 8754.872,
+      "min_us": 2917.256,
+      "max_us": 2920.2
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIN3c108BFloat16EEESt5arrayIPcLy1EEEEviT0_T1_",
+      "calls": 6,
+      "total_us": 147.072,
+      "min_us": 2.816,
+      "max_us": 47.008
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIfEESt5arrayIPcLy1EEEEviT0_T1_",
+      "calls": 9,
+      "total_us": 6.463999999999999,
+      "min_us": 0.672,
+      "max_us": 0.768
+    },
+    {
+      "name": "_ZN2at6native13reduce_kernelILi512ELi1ENS0_8ReduceOpIfNS0_7MeanOpsIffffEEjfLi4ELi4EEEEEvT1_",
+      "calls": 3,
+      "total_us": 5.248,
+      "min_us": 1.728,
+      "max_us": 1.76
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub23DeviceSelectSweepKernelINS0_6detail24device_select_policy_hubIxbiLb0ELb0EE9Policy900ENS0_21CountingInputIteratorIxxEENS0_22TransformInputIteratorIbN2at6native43_GLOBAL__N__95275a52_10_Nonzero_cu_cba1aaa09NonZeroOpIbEEPKbxEEPxPiNS0_13ScanTileStateIiLb1EEENS0_8NullTypeESL_iLb0ELb0EEEvT0_T1_T2_T3_T4_T5_T6_T7_iNS2_7vsmem_tE",
+      "calls": 3,
+      "total_us": 5.12,
+      "min_us": 1.696,
+      "max_us": 1.728
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIiEESt5arrayIPcLy1EEEEviT0_T1_",
+      "calls": 6,
+      "total_us": 4.927,
+      "min_us": 0.672,
+      "max_us": 0.992
+    },
+    {
+      "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE1_clEvEUliE_St5arrayIPcLy2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_",
+      "calls": 3,
+      "total_us": 4.640000000000001,
+      "min_us": 1.44,
+      "max_us": 1.632
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIfEESt5arrayIPcLy3EEEEviT0_T1_",
+      "calls": 3,
+      "total_us": 3.361,
+      "min_us": 1.088,
+      "max_us": 1.153
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_13AUnaryFunctorIxxbNS0_51_GLOBAL__N__ec705ec5_18_CompareEQKernel_cu_d8008c9616CompareEqFunctorIxEEEESt5arrayIPcLy2EEEEviT0_T1_",
+      "calls": 3,
+      "total_us": 3.296,
+      "min_us": 1.056,
+      "max_us": 1.153
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub28DeviceReduceSingleTileKernelINS0_18DeviceReducePolicyIiyN4cuda3std3__44plusIvEEE9Policy600ENS0_22TransformInputIteratorIbN2at6native43_GLOBAL__N__95275a52_10_Nonzero_cu_cba1aaa09NonZeroOpIbEEPKbxEEPiyS7_iiNS5_10__identityEEEvT0_T1_T2_T3_T4_T6_",
+      "calls": 3,
+      "total_us": 3.263,
+      "min_us": 1.087,
+      "max_us": 1.088
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIjEESt5arrayIPcLy1EEEEviT0_T1_",
+      "calls": 3,
+      "total_us": 2.24,
+      "min_us": 0.736,
+      "max_us": 0.768
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub23DeviceCompactInitKernelINS0_13ScanTileStateIiLb1EEEPiEEvT_iT0_",
+      "calls": 3,
+      "total_us": 2.144,
+      "min_us": 0.704,
+      "max_us": 0.736
+    }
+  ],
+  "cuda_allocations": [
+    {
+      "Device Type": 1,
+      "Ev Idx": 127,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88379392,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 129,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996092416,
+      "Total Allocated": 88379904,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 130,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88380416,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 131,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88379904,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 132,
+      "finished": false,
+      "Bytes": 32768,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88412672,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 133,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88413696,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 134,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88412672,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 135,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996092416,
+      "Total Allocated": 88412160,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 136,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 137,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88424448,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 138,
+      "finished": false,
+      "Bytes": -32768,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88391680,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 139,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88375296,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 140,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88391680,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 141,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 142,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408576,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 143,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 144,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408576,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 145,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88392192,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 146,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88392704,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 147,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 159678976,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 148,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 159678464,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 149,
+      "finished": false,
+      "Bytes": -4194304,
+      "Device Id": 0,
+      "Addr": 55889100800,
+      "Total Allocated": 155484160,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 150,
+      "finished": false,
+      "Bytes": -67108864,
+      "Device Id": 0,
+      "Addr": 56279171072,
+      "Total Allocated": 88375296,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 152,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88379392,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 154,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996092416,
+      "Total Allocated": 88379904,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 155,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88380416,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 156,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88379904,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 157,
+      "finished": false,
+      "Bytes": 32768,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88412672,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 158,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88413696,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 159,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88412672,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 160,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996092416,
+      "Total Allocated": 88412160,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 161,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 162,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88424448,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 163,
+      "finished": false,
+      "Bytes": -32768,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88391680,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 164,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88375296,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 165,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88391680,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 166,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 167,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408576,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 168,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 169,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408576,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 170,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88392192,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 171,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88392704,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 172,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 159678976,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 173,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 159678464,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 174,
+      "finished": false,
+      "Bytes": -4194304,
+      "Device Id": 0,
+      "Addr": 55889100800,
+      "Total Allocated": 155484160,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 175,
+      "finished": false,
+      "Bytes": -67108864,
+      "Device Id": 0,
+      "Addr": 56279171072,
+      "Total Allocated": 88375296,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 177,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88379392,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 179,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996092416,
+      "Total Allocated": 88379904,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 180,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88380416,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 181,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88379904,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 182,
+      "finished": false,
+      "Bytes": 32768,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88412672,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 183,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88413696,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 184,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88412672,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 185,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996092416,
+      "Total Allocated": 88412160,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 186,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 187,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88424448,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 188,
+      "finished": false,
+      "Bytes": -32768,
+      "Device Id": 0,
+      "Addr": 55996092928,
+      "Total Allocated": 88391680,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 189,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996125696,
+      "Total Allocated": 88375296,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 190,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 88391680,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 191,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 192,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408576,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 193,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408064,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 194,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 88408576,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 195,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88392192,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 196,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 88392704,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 197,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996104704,
+      "Total Allocated": 159678976,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 198,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 55996121088,
+      "Total Allocated": 159678464,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 295,
+      "finished": false,
+      "Bytes": 4194304,
+      "Device Id": 0,
+      "Addr": 55889100800,
+      "Total Allocated": 92587008,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 296,
+      "finished": false,
+      "Bytes": 67108864,
+      "Device Id": 0,
+      "Addr": 56279171072,
+      "Total Allocated": 159695872,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 297,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 55996105216,
+      "Total Allocated": 159696896,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 298,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996121600,
+      "Total Allocated": 159713280,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 299,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 55996105216,
+      "Total Allocated": 159712256,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 300,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996121600,
+      "Total Allocated": 159695872,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 301,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 159679488,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 302,
+      "finished": false,
+      "Bytes": 4194304,
+      "Device Id": 0,
+      "Addr": 55889100800,
+      "Total Allocated": 92587008,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 303,
+      "finished": false,
+      "Bytes": 67108864,
+      "Device Id": 0,
+      "Addr": 56279171072,
+      "Total Allocated": 159695872,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 304,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 55996105216,
+      "Total Allocated": 159696896,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 305,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996121600,
+      "Total Allocated": 159713280,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 306,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 55996105216,
+      "Total Allocated": 159712256,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 307,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996121600,
+      "Total Allocated": 159695872,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 308,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 159679488,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 309,
+      "finished": false,
+      "Bytes": 4194304,
+      "Device Id": 0,
+      "Addr": 55889100800,
+      "Total Allocated": 92587008,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 310,
+      "finished": false,
+      "Bytes": 67108864,
+      "Device Id": 0,
+      "Addr": 56279171072,
+      "Total Allocated": 159695872,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 311,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 55996105216,
+      "Total Allocated": 159696896,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 312,
+      "finished": false,
+      "Bytes": 16384,
+      "Device Id": 0,
+      "Addr": 55996121600,
+      "Total Allocated": 159713280,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 313,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 55996105216,
+      "Total Allocated": 159712256,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 314,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996121600,
+      "Total Allocated": 159695872,
+      "Total Reserved": 3938451456
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 315,
+      "finished": false,
+      "Bytes": -16384,
+      "Device Id": 0,
+      "Addr": 55996088320,
+      "Total Allocated": 159679488,
+      "Total Reserved": 3938451456
+    }
+  ],
+  "shape": [
+    4096,
+    65536,
+    512
+  ],
+  "method": "cce_no_filter",
+  "label": "large",
+  "iterations": 3,
+  "operations": [
+    {
+      "name": "iteration",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 160.19999999999845,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 8794.679000000007,
+      "self_cuda_memory_bytes": -1536,
+      "cuda_memory_bytes": 71303168,
+      "flops": 0
+    },
+    {
+      "name": "clear_grad",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 46.70000000000044,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": -142606336,
+      "cuda_memory_bytes": -142606336,
+      "flops": 0
+    },
+    {
+      "name": "forward",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 518.2000000000039,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 8792.375000000007,
+      "self_cuda_memory_bytes": -159744,
+      "cuda_memory_bytes": 50688,
+      "flops": 0
+    },
+    {
+      "name": "aten::type_as",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ],
+        [
+          4096,
+          512
+        ]
+      ],
+      "self_cpu_us": 15.20000000000124,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::to",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 2.699999999999193,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::flatten",
+      "count": 6,
+      "shapes": [
+        [
+          4096
+        ],
+        [],
+        []
+      ],
+      "self_cpu_us": 2.3000000000009777,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::ne",
+      "count": 3,
+      "shapes": [
+        [
+          4096
+        ],
+        []
+      ],
+      "self_cpu_us": 102.89999999999918,
+      "self_cuda_us": 3.2959999999989122,
+      "cuda_total_us": 4.382999999998901,
+      "self_cuda_memory_bytes": 12288,
+      "cuda_memory_bytes": 12288,
+      "flops": 0
+    },
+    {
+      "name": "Activity Buffer Request",
+      "count": 1,
+      "shapes": [],
+      "self_cpu_us": 402.6,
+      "self_cuda_us": 1.086999999999989,
+      "cuda_total_us": 1.086999999999989,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "cudaLaunchKernel",
+      "count": 45,
+      "shapes": [],
+      "self_cpu_us": 660.4000000000099,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "forward",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 10189.404000000002,
+      "cuda_total_us": 10189.404000000002,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_13AUnaryFunctorIxxbNS0_51_GLOBAL__N__ec705ec5_18_CompareEQKernel_cu_d8008c9616CompareEqFunctorIxEEEESt5arrayIPcLy2EEEEviT0_T1_",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 3.2959999999989122,
+      "cuda_total_us": 3.2959999999989122,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::nonzero",
+      "count": 3,
+      "shapes": [
+        [
+          4096
+        ]
+      ],
+      "self_cpu_us": 131.6000000000049,
+      "self_cuda_us": 13.471000000002732,
+      "cuda_total_us": 13.471000000002732,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 98304,
+      "flops": 0
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub28DeviceReduceSingleTileKernelINS0_18DeviceReducePolicyIiyN4cuda3std3__44plusIvEEE9Policy600ENS0_22TransformInputIteratorIbN2at6native43_GLOBAL__N__95275a52_10_Nonzero_cu_cba1aaa09NonZeroOpIbEEPKbxEEPiyS7_iiNS5_10__identityEEEvT0_T1_T2_T3_T4_T6_",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 3.262999999999238,
+      "cuda_total_us": 3.262999999999238,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "cudaPeekAtLastError",
+      "count": 18,
+      "shapes": [],
+      "self_cpu_us": 1.4999999999961346,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "cudaMemcpyAsync",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 59.699999999999136,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "cudaStreamSynchronize",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 23945.899999999998,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "Memcpy DtoH (Device -> Pinned)",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 2.9440000000033706,
+      "cuda_total_us": 2.9440000000033706,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::resize_",
+      "count": 3,
+      "shapes": [
+        [
+          0
+        ],
+        [],
+        []
+      ],
+      "self_cpu_us": 21.500000000000227,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 98304,
+      "cuda_memory_bytes": 98304,
+      "flops": 0
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub23DeviceCompactInitKernelINS0_13ScanTileStateIiLb1EEEPiEEvT_iT0_",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 2.14400000000046,
+      "cuda_total_us": 2.14400000000046,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "cudaDeviceGetAttribute",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 2.699999999999818,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub23DeviceSelectSweepKernelINS0_6detail24device_select_policy_hubIxbiLb0ELb0EE9Policy900ENS0_21CountingInputIteratorIxxEENS0_22TransformInputIteratorIbN2at6native43_GLOBAL__N__95275a52_10_Nonzero_cu_cba1aaa09NonZeroOpIbEEPKbxEEPxPiNS0_13ScanTileStateIiLb1EEENS0_8NullTypeESL_iLb0ELb0EEEvT0_T1_T2_T3_T4_T5_T6_T7_iNS2_7vsmem_tE",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 5.1199999999996635,
+      "cuda_total_us": 5.1199999999996635,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::t",
+      "count": 3,
+      "shapes": [
+        [
+          1,
+          4096
+        ]
+      ],
+      "self_cpu_us": 8.000000000002956,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::transpose",
+      "count": 3,
+      "shapes": [
+        [
+          1,
+          4096
+        ],
+        [],
+        []
+      ],
+      "self_cpu_us": 11.399999999997817,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::as_strided",
+      "count": 3,
+      "shapes": [
+        [
+          1,
+          4096
+        ],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 5.7000000000000455,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::set_",
+      "count": 3,
+      "shapes": [
+        [
+          1,
+          4096
+        ],
+        [
+          4096,
+          1
+        ]
+      ],
+      "self_cpu_us": 13.200000000001182,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::to",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          1
+        ],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 7.300000000002001,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 4.639999999998963,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 49152,
+      "flops": 0
+    },
+    {
+      "name": "aten::_to_copy",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          1
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 22.899999999998727,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 4.639999999998963,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 49152,
+      "flops": 0
+    },
+    {
+      "name": "aten::empty_strided",
+      "count": 12,
+      "shapes": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 58.2000000000005,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 213960192,
+      "cuda_memory_bytes": 213960192,
+      "flops": 0
+    },
+    {
+      "name": "aten::copy_",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          1
+        ],
+        [
+          4096,
+          1
+        ],
+        []
+      ],
+      "self_cpu_us": 30.299999999998363,
+      "self_cuda_us": 4.639999999998963,
+      "cuda_total_us": 4.639999999998963,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE1_clEvEUliE_St5arrayIPcLy2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 4.639999999998963,
+      "cuda_total_us": 4.639999999998963,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::flatten",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        [],
+        []
+      ],
+      "self_cpu_us": 7.599999999997408,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "LinearCrossEntropyFunction",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        [
+          65536,
+          512
+        ],
+        []
+      ],
+      "self_cpu_us": 493.2000000000007,
+      "self_cuda_us": 8754.872,
+      "cuda_total_us": 8769.881000000005,
+      "self_cuda_memory_bytes": -50688,
+      "cuda_memory_bytes": 50688,
+      "flops": 0
+    },
+    {
+      "name": "aten::new_full",
+      "count": 9,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 33.09999999999877,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 6.400000000001228,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 99840,
+      "flops": 0
+    },
+    {
+      "name": "aten::new_empty",
+      "count": 12,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 21.299999999997453,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 102912,
+      "flops": 0
+    },
+    {
+      "name": "aten::empty",
+      "count": 15,
+      "shapes": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 40.50000000000546,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 152064,
+      "cuda_memory_bytes": 152064,
+      "flops": 0
+    },
+    {
+      "name": "aten::fill_",
+      "count": 6,
+      "shapes": [
+        [
+          4096
+        ],
+        []
+      ],
+      "self_cpu_us": 20.599999999998772,
+      "self_cuda_us": 4.159999999999627,
+      "cuda_total_us": 4.159999999999627,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIfEESt5arrayIPcLy1EEEEviT0_T1_",
+      "count": 9,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 6.463999999999714,
+      "cuda_total_us": 6.463999999999714,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::fill_",
+      "count": 3,
+      "shapes": [
+        [
+          32
+        ],
+        []
+      ],
+      "self_cpu_us": 8.200000000002774,
+      "self_cuda_us": 2.2400000000016007,
+      "cuda_total_us": 2.2400000000016007,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIjEESt5arrayIPcLy1EEEEviT0_T1_",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 2.2400000000016007,
+      "cuda_total_us": 2.2400000000016007,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "cuLaunchKernelEx",
+      "count": 6,
+      "shapes": [],
+      "self_cpu_us": 73.20000000000346,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_cce_lse_forward_kernel",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 8754.872,
+      "cuda_total_us": 8754.872,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::add_",
+      "count": 3,
+      "shapes": [
+        [
+          4096
+        ],
+        [
+          4096
+        ],
+        []
+      ],
+      "self_cpu_us": 27.099999999998772,
+      "self_cuda_us": 3.3610000000016953,
+      "cuda_total_us": 3.3610000000016953,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::mean",
+      "count": 3,
+      "shapes": [
+        [
+          4096
+        ],
+        []
+      ],
+      "self_cpu_us": 49.79999999999518,
+      "self_cuda_us": 5.24800000000414,
+      "cuda_total_us": 5.24800000000414,
+      "self_cuda_memory_bytes": 1536,
+      "cuda_memory_bytes": 1536,
+      "flops": 0
+    },
+    {
+      "name": "aten::as_strided",
+      "count": 3,
+      "shapes": [
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 2.3000000000013188,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "backward",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 1815.6000000000022,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 2.3040000000000873,
+      "self_cuda_memory_bytes": 213858816,
+      "cuda_memory_bytes": 213860352,
+      "flops": 0
+    },
+    {
+      "name": "aten::ones_like",
+      "count": 3,
+      "shapes": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 11.199999999997772,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 2.3040000000000873,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 1536,
+      "flops": 0
+    },
+    {
+      "name": "aten::empty_like",
+      "count": 3,
+      "shapes": [
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 8.299999999999727,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 1536,
+      "flops": 0
+    },
+    {
+      "name": "aten::fill_",
+      "count": 3,
+      "shapes": [
+        [],
+        []
+      ],
+      "self_cpu_us": 7.999999999998636,
+      "self_cuda_us": 2.3040000000000873,
+      "cuda_total_us": 2.3040000000000873,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "autograd::engine::evaluate_function: LinearCrossEntropyFunctionBackward",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 40.49999999999636,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 29853.935999999998,
+      "self_cuda_memory_bytes": -49152,
+      "cuda_memory_bytes": 213860352,
+      "flops": 0
+    },
+    {
+      "name": "LinearCrossEntropyFunctionBackward",
+      "count": 3,
+      "shapes": [
+        [],
+        []
+      ],
+      "self_cpu_us": 819.8999999999992,
+      "self_cuda_us": 29701.936999999998,
+      "cuda_total_us": 29853.935999999998,
+      "self_cuda_memory_bytes": -52224,
+      "cuda_memory_bytes": 213909504,
+      "flops": 0
+    },
+    {
+      "name": "aten::zeros_like",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 16.099999999999,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 8.640000000001237,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 12582912,
+      "flops": 0
+    },
+    {
+      "name": "aten::empty_like",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 11.500000000004093,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 12582912,
+      "flops": 0
+    },
+    {
+      "name": "aten::zero_",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ]
+      ],
+      "self_cpu_us": 10.49999999999909,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 8.640000000001237,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::fill_",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        []
+      ],
+      "self_cpu_us": 22.400000000002365,
+      "self_cuda_us": 8.640000000001237,
+      "cuda_total_us": 8.640000000001237,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::zeros_like",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 9.40000000000282,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 138.43199999999797,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 201326592,
+      "flops": 0
+    },
+    {
+      "name": "aten::empty_like",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 7.099999999998545,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 201326592,
+      "flops": 0
+    },
+    {
+      "name": "aten::zero_",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ]
+      ],
+      "self_cpu_us": 6.199999999996635,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 138.43199999999797,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::fill_",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ],
+        []
+      ],
+      "self_cpu_us": 8.799999999997908,
+      "self_cuda_us": 138.43199999999797,
+      "cuda_total_us": 138.43199999999797,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::new_zeros",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 11.599999999995816,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 2.8469999999997526,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 3072,
+      "flops": 0
+    },
+    {
+      "name": "aten::zero_",
+      "count": 3,
+      "shapes": [
+        [
+          32,
+          8
+        ]
+      ],
+      "self_cpu_us": 4.800000000001091,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 2.8469999999997526,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::fill_",
+      "count": 3,
+      "shapes": [
+        [
+          32,
+          8
+        ],
+        []
+      ],
+      "self_cpu_us": 8.699999999997999,
+      "self_cuda_us": 2.8469999999997526,
+      "cuda_total_us": 2.8469999999997526,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::new_zeros",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 7.6000000000008185,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 2.0800000000008367,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 49152,
+      "flops": 0
+    },
+    {
+      "name": "aten::new_empty",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ],
+        [],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 4.199999999998909,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 49152,
+      "flops": 0
+    },
+    {
+      "name": "aten::zero_",
+      "count": 3,
+      "shapes": [
+        [
+          512,
+          8
+        ]
+      ],
+      "self_cpu_us": 4.599999999998545,
+      "self_cuda_us": 0.0,
+      "cuda_total_us": 2.0800000000008367,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::fill_",
+      "count": 3,
+      "shapes": [
+        [
+          512,
+          8
+        ],
+        []
+      ],
+      "self_cpu_us": 4.699999999998909,
+      "self_cuda_us": 2.0800000000008367,
+      "cuda_total_us": 2.0800000000008367,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::to",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 2.599999999999909,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::to",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ],
+        [],
+        [],
+        [],
+        []
+      ],
+      "self_cpu_us": 0.7999999999983629,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "autograd::engine::evaluate_function: torch::autograd::AccumulateGrad",
+      "count": 6,
+      "shapes": [],
+      "self_cpu_us": 20.399999999997362,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "torch::autograd::AccumulateGrad",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ]
+      ],
+      "self_cpu_us": 14.40000000000282,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::detach",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ]
+      ],
+      "self_cpu_us": 5.899999999998272,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "detach",
+      "count": 3,
+      "shapes": [
+        [
+          4096,
+          512
+        ]
+      ],
+      "self_cpu_us": 6.499999999999545,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "torch::autograd::AccumulateGrad",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ]
+      ],
+      "self_cpu_us": 5.700000000002547,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "aten::detach",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ]
+      ],
+      "self_cpu_us": 4.300000000000182,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "detach",
+      "count": 3,
+      "shapes": [
+        [
+          65536,
+          512
+        ]
+      ],
+      "self_cpu_us": 1.300000000000182,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIfEESt5arrayIPcLy3EEEEviT0_T1_",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 3.3610000000016953,
+      "cuda_total_us": 3.3610000000016953,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN2at6native13reduce_kernelILi512ELi1ENS0_8ReduceOpIfNS0_7MeanOpsIffffEEjfLi4ELi4EEEEEvT1_",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 5.24800000000414,
+      "cuda_total_us": 5.24800000000414,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "backward",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 2.3040000000000873,
+      "cuda_total_us": 2.3040000000000873,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIN3c108BFloat16EEESt5arrayIPcLy1EEEEviT0_T1_",
+      "count": 6,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 147.0719999999992,
+      "cuda_total_us": 147.0719999999992,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIiEESt5arrayIPcLy1EEEEviT0_T1_",
+      "count": 6,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 4.927000000000589,
+      "cuda_total_us": 4.927000000000589,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "_cce_backward_kernel",
+      "count": 3,
+      "shapes": [],
+      "self_cpu_us": 0,
+      "self_cuda_us": 29701.936999999998,
+      "cuda_total_us": 29701.936999999998,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    },
+    {
+      "name": "cudaDeviceSynchronize",
+      "count": 2,
+      "shapes": [],
+      "self_cpu_us": 12270.399999999998,
+      "self_cuda_us": 0,
+      "cuda_total_us": 0,
+      "self_cuda_memory_bytes": 0,
+      "cuda_memory_bytes": 0,
+      "flops": 0
+    }
+  ],
+  "trace_has_cuda_kernels": true
+}

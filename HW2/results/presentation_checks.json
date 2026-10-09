@@ -1,0 +1,87 @@
+[
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Cut Cross-Entropy"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Где находится Cross-Entropy?"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "На training появляется матрица |V|×N"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Loss раскладывается на два вычисления"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Indexed matmul: вычислить только correct-token logits"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Linear-log-sum-exp: block matmul → block LSE → update"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Backward: формула и приближение"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Один objective — разный dataflow"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Что получили авторы"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Что мы воспроизводим"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Наши измеренные результаты"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Выводы в пределах измерений"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Численный пример: почему не нужен полный softmax output"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Stable / online log-sum-exp"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Как измеряли"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Что видно в profiler"
+  },
+  {
+    "scroll": 1000,
+    "client": 1000,
+    "heading": "Gemma 2 2B / Alpaca"
+  }
+]

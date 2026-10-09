@@ -1,0 +1,25 @@
+{
+  "timestamp_utc": "2026-10-09T11:55:40.588917+00:00",
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "triton": "3.6.0",
+  "triton_distribution": "3.6.0.post26",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "vram_bytes": 17094475776,
+  "capability": [
+    12,
+    0
+  ],
+  "driver": "591.86",
+  "upstream_commit": "3de376c106a1916bc5e1b619f9c77c87a461ee1c",
+  "repository_base_commit": "700f5a57aae853c92cc186b46c8737183202e8ec",
+  "notebook_code_sha256": "71cc50e6dbf0c1139545f4bab7c72cf8d4691c60e54877636ab4872e8d37c8cb",
+  "tf32": false,
+  "dtype": "bfloat16",
+  "args": {
+    "mode": "notebook_smoke"
+  },
+  "windows_adaptation": "version probe only; ASCII cache path; kernels unmodified"
+}

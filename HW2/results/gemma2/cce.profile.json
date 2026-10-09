@@ -1,0 +1,1393 @@
+{
+  "categories": {
+    "user_annotation": 9,
+    "cpu_op": 243,
+    "fwdbwd": 6,
+    "cpu_instant_event": 130,
+    "overhead": 1,
+    "kernel": 78,
+    "ac2g": 254,
+    "cuda_runtime": 143,
+    "gpu_memcpy": 6,
+    "cuda_driver": 9,
+    "gpu_memset": 18,
+    "gpu_user_annotation": 9,
+    "": 11,
+    "Trace": 1
+  },
+  "kernels": [
+    {
+      "name": "_cce_backward_kernel",
+      "calls": 3,
+      "total_us": 50110.66799999999,
+      "min_us": 16696.548,
+      "max_us": 16710.372
+    },
+    {
+      "name": "_cce_lse_forward_kernel",
+      "calls": 3,
+      "total_us": 40243.583,
+      "min_us": 13412.971,
+      "max_us": 13416.618
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIN3c108BFloat16EEESt5arrayIPcLy1EEEEviT0_T1_",
+      "calls": 6,
+      "total_us": 4119.103,
+      "min_us": 3.2,
+      "max_us": 1373.387
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub29DeviceRadixSortOnesweepKernelINS0_21DeviceRadixSortPolicyIfN2at4cuda3cub6detail10OpaqueTypeILi8EEEyE9Policy900ELb0EfS8_yiiNS0_6detail21identity_decomposer_tEEEvPT5_SE_PT3_PKSF_PT1_PKSJ_PT2_PKSN_T4_iiT6_",
+      "calls": 12,
+      "total_us": 97.21600000000001,
+      "min_us": 7.488,
+      "max_us": 8.48
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIfEESt5arrayIPcLy1EEEEviT0_T1_",
+      "calls": 12,
+      "total_us": 10.112,
+      "min_us": 0.703,
+      "max_us": 1.184
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub30DeviceRadixSortHistogramKernelINS0_21DeviceRadixSortPolicyIfN2at4cuda3cub6detail10OpaqueTypeILi8EEEyE9Policy900ELb0EfyNS0_6detail21identity_decomposer_tEEEvPT2_PKT1_SD_iiT3_",
+      "calls": 3,
+      "total_us": 9.312000000000001,
+      "min_us": 3.104,
+      "max_us": 3.104
+    },
+    {
+      "name": "_ZN2at6native46_GLOBAL__N__01ed9411_13_SortStable_cu_0f4aaf7027fill_reverse_indices_kernelEPxiNS_4cuda6detail10IntDividerIjEE",
+      "calls": 3,
+      "total_us": 7.968,
+      "min_us": 2.656,
+      "max_us": 2.656
+    },
+    {
+      "name": "_ZN2at6native13reduce_kernelILi512ELi1ENS0_8ReduceOpIfNS0_7MeanOpsIffffEEjfLi4ELi4EEEEEvT1_",
+      "calls": 3,
+      "total_us": 4.704000000000001,
+      "min_us": 1.568,
+      "max_us": 1.568
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIiEESt5arrayIPcLy1EEEEviT0_T1_",
+      "calls": 6,
+      "total_us": 4.415,
+      "min_us": 0.703,
+      "max_us": 0.768
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub28DeviceReduceSingleTileKernelINS0_18DeviceReducePolicyIiyN4cuda3std3__44plusIvEEE9Policy600ENS0_22TransformInputIteratorIbN2at6native43_GLOBAL__N__95275a52_10_Nonzero_cu_cba1aaa09NonZeroOpIbEEPKbxEEPiyS7_iiNS5_10__identityEEEvT0_T1_T2_T3_T4_T6_",
+      "calls": 3,
+      "total_us": 4.32,
+      "min_us": 1.44,
+      "max_us": 1.44
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub23DeviceSelectSweepKernelINS0_6detail24device_select_policy_hubIxbiLb0ELb0EE9Policy900ENS0_21CountingInputIteratorIxxEENS0_22TransformInputIteratorIbN2at6native43_GLOBAL__N__95275a52_10_Nonzero_cu_cba1aaa09NonZeroOpIbEEPKbxEEPxPiNS0_13ScanTileStateIiLb1EEENS0_8NullTypeESL_iLb0ELb0EEEvT0_T1_T2_T3_T4_T5_T6_T7_iNS2_7vsmem_tE",
+      "calls": 3,
+      "total_us": 4.32,
+      "min_us": 1.44,
+      "max_us": 1.44
+    },
+    {
+      "name": "triton_poi_fused__to_copy_0",
+      "calls": 3,
+      "total_us": 4.161,
+      "min_us": 1.376,
+      "max_us": 1.408
+    },
+    {
+      "name": "_ZN2at6native27unrolled_elementwise_kernelIZZZNS0_23direct_copy_kernel_cudaERNS_18TensorIteratorBaseEENKUlvE1_clEvENKUlvE1_clEvEUliE_St5arrayIPcLy2EELi4E23TrivialOffsetCalculatorILi1EjESB_NS0_6memory12LoadWithCastILi1EEENSC_13StoreWithCastILi1EEEEEviT_T0_T2_T3_T4_T5_",
+      "calls": 3,
+      "total_us": 3.84,
+      "min_us": 1.28,
+      "max_us": 1.28
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_15CUDAFunctor_addIfEESt5arrayIPcLy3EEEEviT0_T1_",
+      "calls": 3,
+      "total_us": 3.3930000000000002,
+      "min_us": 1.12,
+      "max_us": 1.152
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub33DeviceRadixSortExclusiveSumKernelINS0_21DeviceRadixSortPolicyIfN2at4cuda3cub6detail10OpaqueTypeILi8EEEyE9Policy900EyEEvPT0_",
+      "calls": 3,
+      "total_us": 2.912,
+      "min_us": 0.96,
+      "max_us": 0.992
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_13AUnaryFunctorIxxbNS0_51_GLOBAL__N__ec705ec5_18_CompareEQKernel_cu_d8008c9616CompareEqFunctorIxEEEESt5arrayIPcLy2EEEEviT0_T1_",
+      "calls": 3,
+      "total_us": 2.816,
+      "min_us": 0.928,
+      "max_us": 0.96
+    },
+    {
+      "name": "_ZN2at6native29vectorized_elementwise_kernelILi4ENS0_11FillFunctorIjEESt5arrayIPcLy1EEEEviT0_T1_",
+      "calls": 3,
+      "total_us": 2.3040000000000003,
+      "min_us": 0.768,
+      "max_us": 0.768
+    },
+    {
+      "name": "_ZN14at_cuda_detail3cub23DeviceCompactInitKernelINS0_13ScanTileStateIiLb1EEEPiEEvT_iT0_",
+      "calls": 3,
+      "total_us": 2.208,
+      "min_us": 0.736,
+      "max_us": 0.736
+    }
+  ],
+  "cuda_allocations": [
+    {
+      "Device Type": 1,
+      "Ev Idx": 133,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202463744,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 135,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649741312,
+      "Total Allocated": 1202464256,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 136,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202464768,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 137,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202464256,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 138,
+      "finished": false,
+      "Bytes": 8192,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202472448,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 139,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202473472,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 140,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202472448,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 141,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649741312,
+      "Total Allocated": 1202471936,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 142,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202470912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 143,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202475008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 144,
+      "finished": false,
+      "Bytes": -8192,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202466816,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 145,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202462720,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 146,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202466816,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 147,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1202470912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 148,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1202471424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 149,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48649748992,
+      "Total Allocated": 1203495424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 150,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1203494912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 151,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1203495424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 152,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1203491328,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 153,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1203491840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 154,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 2387878400,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 155,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 2387877888,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 156,
+      "finished": false,
+      "Bytes": -4718592,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 2383159296,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 157,
+      "finished": false,
+      "Bytes": -1180696576,
+      "Device Id": 0,
+      "Addr": 53588525056,
+      "Total Allocated": 1202462720,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 159,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202463744,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 161,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649741312,
+      "Total Allocated": 1202464256,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 162,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202464768,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 163,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202464256,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 164,
+      "finished": false,
+      "Bytes": 8192,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202472448,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 165,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202473472,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 166,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202472448,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 167,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649741312,
+      "Total Allocated": 1202471936,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 168,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202470912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 169,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202475008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 170,
+      "finished": false,
+      "Bytes": -8192,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202466816,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 171,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202462720,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 172,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202466816,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 173,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1202470912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 174,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1202471424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 175,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48649748992,
+      "Total Allocated": 1203495424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 176,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1203494912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 177,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1203495424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 178,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1203491328,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 179,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1203491840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 180,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 2387878400,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 181,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 2387877888,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 182,
+      "finished": false,
+      "Bytes": -4718592,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 2383159296,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 183,
+      "finished": false,
+      "Bytes": -1180696576,
+      "Device Id": 0,
+      "Addr": 53588525056,
+      "Total Allocated": 1202462720,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 185,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202463744,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 187,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649741312,
+      "Total Allocated": 1202464256,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 188,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202464768,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 189,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202464256,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 190,
+      "finished": false,
+      "Bytes": 8192,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202472448,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 191,
+      "finished": false,
+      "Bytes": 1024,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202473472,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 192,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202472448,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 193,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649741312,
+      "Total Allocated": 1202471936,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 194,
+      "finished": false,
+      "Bytes": -1024,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202470912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 195,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202475008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 196,
+      "finished": false,
+      "Bytes": -8192,
+      "Device Id": 0,
+      "Addr": 48649741824,
+      "Total Allocated": 1202466816,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 197,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649750016,
+      "Total Allocated": 1202462720,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 198,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 1202466816,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 199,
+      "finished": false,
+      "Bytes": 4096,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1202470912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 200,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1202471424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 201,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48649748992,
+      "Total Allocated": 1203495424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 202,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1203494912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 203,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 1203495424,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 204,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1203491328,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 205,
+      "finished": false,
+      "Bytes": 512,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 1203491840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 206,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649744384,
+      "Total Allocated": 2387878400,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 207,
+      "finished": false,
+      "Bytes": -512,
+      "Device Id": 0,
+      "Addr": 48649748480,
+      "Total Allocated": 2387877888,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 328,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1204515840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 329,
+      "finished": false,
+      "Bytes": 2048000,
+      "Device Id": 0,
+      "Addr": 47356051456,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 330,
+      "finished": false,
+      "Bytes": 2048000,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1208611840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 331,
+      "finished": false,
+      "Bytes": 3129856,
+      "Device Id": 0,
+      "Addr": 47301738496,
+      "Total Allocated": 1211741696,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 332,
+      "finished": false,
+      "Bytes": -3129856,
+      "Device Id": 0,
+      "Addr": 47301738496,
+      "Total Allocated": 1208611840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 333,
+      "finished": false,
+      "Bytes": -2048000,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 334,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1205539840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 335,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 336,
+      "finished": false,
+      "Bytes": -2048000,
+      "Device Id": 0,
+      "Addr": 47356051456,
+      "Total Allocated": 1204515840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 337,
+      "finished": false,
+      "Bytes": 4718592,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1209234432,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 338,
+      "finished": false,
+      "Bytes": 1180696576,
+      "Device Id": 0,
+      "Addr": 53588525056,
+      "Total Allocated": 2389931008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 339,
+      "finished": false,
+      "Bytes": 1536,
+      "Device Id": 0,
+      "Addr": 48649744896,
+      "Total Allocated": 2389932544,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 340,
+      "finished": false,
+      "Bytes": 288256,
+      "Device Id": 0,
+      "Addr": 47326429184,
+      "Total Allocated": 2390220800,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 341,
+      "finished": false,
+      "Bytes": -1536,
+      "Device Id": 0,
+      "Addr": 48649744896,
+      "Total Allocated": 2390219264,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 342,
+      "finished": false,
+      "Bytes": -288256,
+      "Device Id": 0,
+      "Addr": 47326429184,
+      "Total Allocated": 2389931008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 343,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 2388907008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 344,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 2388902912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 345,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48649748992,
+      "Total Allocated": 2387878912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 346,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1204515840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 347,
+      "finished": false,
+      "Bytes": 2048000,
+      "Device Id": 0,
+      "Addr": 47356051456,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 348,
+      "finished": false,
+      "Bytes": 2048000,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1208611840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 349,
+      "finished": false,
+      "Bytes": 3129856,
+      "Device Id": 0,
+      "Addr": 47301738496,
+      "Total Allocated": 1211741696,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 350,
+      "finished": false,
+      "Bytes": -3129856,
+      "Device Id": 0,
+      "Addr": 47301738496,
+      "Total Allocated": 1208611840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 351,
+      "finished": false,
+      "Bytes": -2048000,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 352,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1205539840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 353,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 354,
+      "finished": false,
+      "Bytes": -2048000,
+      "Device Id": 0,
+      "Addr": 47356051456,
+      "Total Allocated": 1204515840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 355,
+      "finished": false,
+      "Bytes": 4718592,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1209234432,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 356,
+      "finished": false,
+      "Bytes": 1180696576,
+      "Device Id": 0,
+      "Addr": 53588525056,
+      "Total Allocated": 2389931008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 357,
+      "finished": false,
+      "Bytes": 1536,
+      "Device Id": 0,
+      "Addr": 48649744896,
+      "Total Allocated": 2389932544,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 358,
+      "finished": false,
+      "Bytes": 288256,
+      "Device Id": 0,
+      "Addr": 47326429184,
+      "Total Allocated": 2390220800,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 359,
+      "finished": false,
+      "Bytes": -1536,
+      "Device Id": 0,
+      "Addr": 48649744896,
+      "Total Allocated": 2390219264,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 360,
+      "finished": false,
+      "Bytes": -288256,
+      "Device Id": 0,
+      "Addr": 47326429184,
+      "Total Allocated": 2389931008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 361,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 2388907008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 362,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 2388902912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 363,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48649748992,
+      "Total Allocated": 2387878912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 364,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1204515840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 365,
+      "finished": false,
+      "Bytes": 2048000,
+      "Device Id": 0,
+      "Addr": 47356051456,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 366,
+      "finished": false,
+      "Bytes": 2048000,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1208611840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 367,
+      "finished": false,
+      "Bytes": 3129856,
+      "Device Id": 0,
+      "Addr": 47301738496,
+      "Total Allocated": 1211741696,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 368,
+      "finished": false,
+      "Bytes": -3129856,
+      "Device Id": 0,
+      "Addr": 47301738496,
+      "Total Allocated": 1208611840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 369,
+      "finished": false,
+      "Bytes": -2048000,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 370,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1205539840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 371,
+      "finished": false,
+      "Bytes": 1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 1206563840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 372,
+      "finished": false,
+      "Bytes": -2048000,
+      "Device Id": 0,
+      "Addr": 47356051456,
+      "Total Allocated": 1204515840,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 373,
+      "finished": false,
+      "Bytes": 4718592,
+      "Device Id": 0,
+      "Addr": 47299690496,
+      "Total Allocated": 1209234432,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 374,
+      "finished": false,
+      "Bytes": 1180696576,
+      "Device Id": 0,
+      "Addr": 53588525056,
+      "Total Allocated": 2389931008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 375,
+      "finished": false,
+      "Bytes": 1536,
+      "Device Id": 0,
+      "Addr": 48649744896,
+      "Total Allocated": 2389932544,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 376,
+      "finished": false,
+      "Bytes": 288256,
+      "Device Id": 0,
+      "Addr": 47326429184,
+      "Total Allocated": 2390220800,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 377,
+      "finished": false,
+      "Bytes": -1536,
+      "Device Id": 0,
+      "Addr": 48649744896,
+      "Total Allocated": 2390219264,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 378,
+      "finished": false,
+      "Bytes": -288256,
+      "Device Id": 0,
+      "Addr": 47326429184,
+      "Total Allocated": 2389931008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 379,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48650772992,
+      "Total Allocated": 2388907008,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 380,
+      "finished": false,
+      "Bytes": -4096,
+      "Device Id": 0,
+      "Addr": 48649740288,
+      "Total Allocated": 2388902912,
+      "Total Reserved": 7126122496
+    },
+    {
+      "Device Type": 1,
+      "Ev Idx": 381,
+      "finished": false,
+      "Bytes": -1024000,
+      "Device Id": 0,
+      "Addr": 48649748992,
+      "Total Allocated": 2387878912,
+      "Total Reserved": 7126122496
+    }
+  ],
+  "n": 1024,
+  "v": 256000,
+  "d": 2304,
+  "method": "cce",
+  "iterations": 3
+}

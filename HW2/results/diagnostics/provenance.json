@@ -1,0 +1,11 @@
+{
+  "source_sha256": "7ab06fe560d6ac8575df87b7dfb78acfc9e1ea9b0592dd51cc2e35febb8510ca",
+  "environment_reference": "../main/environment.json",
+  "seed": 42,
+  "backward_warmup": 5,
+  "backward_repeats": 30,
+  "total_warmup": 10,
+  "total_repeats": 30,
+  "tf32": false,
+  "dtype": "bfloat16"
+}

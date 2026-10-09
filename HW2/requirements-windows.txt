@@ -1,0 +1,4 @@
+# Install CUDA torch 2.11.0 separately (see README).
+triton-windows==3.6.0.post26
+numpy==2.4.5
+matplotlib==3.10.9

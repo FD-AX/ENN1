@@ -1,0 +1,32 @@
+.venv/
+vendor/
+.cache/
+results/smoke/
+__pycache__/
+.models/
+.data/
+results/profile_smoke/
+
+# Local working scripts: the submitted implementation lives in the notebook.
+*.py
+.local/
+results/notebook_runs/
+results/evidence_audit.json
+results/artifact_validation.json
+# Intermediate exports and notes are consolidated into REPORT.md.
+*.html
+!presentation.html
+*.pdf
+!presentation.pdf
+!sources/paper.pdf
+GEMMA_REPORT.md
+PROFILING.md
+EVIDENCE.md
+RESULTS.md
+GEMMA_RESULTS.md
+PROFILE_RESULTS.md
+SLIDE_NOTES.md
+requirements-export.txt
+sources/triton_seminar.ipynb
+sources/presentation_template.html
+figures/*preview.png

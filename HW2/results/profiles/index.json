@@ -1,0 +1,134 @@
+[
+  {
+    "shape": [
+      1024,
+      4096,
+      512
+    ],
+    "method": "baseline",
+    "label": "small",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      1024,
+      4096,
+      512
+    ],
+    "method": "cce",
+    "label": "small",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      1024,
+      4096,
+      512
+    ],
+    "method": "cce_no_filter",
+    "label": "small",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      1024,
+      4096,
+      512
+    ],
+    "method": "cce_exact",
+    "label": "small",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      4096,
+      65536,
+      512
+    ],
+    "method": "baseline",
+    "label": "large",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      4096,
+      65536,
+      512
+    ],
+    "method": "cce",
+    "label": "large",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      4096,
+      65536,
+      512
+    ],
+    "method": "cce_no_filter",
+    "label": "large",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      4096,
+      65536,
+      512
+    ],
+    "method": "cce_exact",
+    "label": "large",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      1024,
+      65536,
+      2048
+    ],
+    "method": "baseline",
+    "label": "wide",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      1024,
+      65536,
+      2048
+    ],
+    "method": "cce",
+    "label": "wide",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      1024,
+      65536,
+      2048
+    ],
+    "method": "cce_no_filter",
+    "label": "wide",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  },
+  {
+    "shape": [
+      1024,
+      65536,
+      2048
+    ],
+    "method": "cce_exact",
+    "label": "wide",
+    "iterations": 3,
+    "trace_has_cuda_kernels": true
+  }
+]

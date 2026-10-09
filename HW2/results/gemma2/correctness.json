@@ -1,0 +1,97 @@
+[
+  {
+    "method": "baseline_author",
+    "n": 32,
+    "v": 256000,
+    "d": 2304,
+    "reference": "FP32, TF32 disabled, identical BF16 inputs",
+    "loss": 2.1132941246032715,
+    "reference_loss": 2.1239938735961914,
+    "loss_abs": 0.010699748992919922,
+    "e": {
+      "max_abs": 0.0002780351787805557,
+      "relative_l2": 0.01534733115660809
+    },
+    "c": {
+      "max_abs": 0.04225224256515503,
+      "relative_l2": 0.013986963449146239
+    },
+    "passed": true
+  },
+  {
+    "method": "cce",
+    "n": 32,
+    "v": 256000,
+    "d": 2304,
+    "reference": "FP32, TF32 disabled, identical BF16 inputs",
+    "loss": 2.117525815963745,
+    "reference_loss": 2.1239938735961914,
+    "loss_abs": 0.006468057632446289,
+    "e": {
+      "max_abs": 7.627205923199654e-05,
+      "relative_l2": 0.007038090348288062
+    },
+    "c": {
+      "max_abs": 0.010729670524597168,
+      "relative_l2": 0.00522322304719898
+    },
+    "passed": true
+  },
+  {
+    "method": "cce_no_filter",
+    "n": 32,
+    "v": 256000,
+    "d": 2304,
+    "reference": "FP32, TF32 disabled, identical BF16 inputs",
+    "loss": 2.1175248622894287,
+    "reference_loss": 2.1239938735961914,
+    "loss_abs": 0.006469011306762695,
+    "e": {
+      "max_abs": 0.00010521500371396542,
+      "relative_l2": 0.008389504035371077
+    },
+    "c": {
+      "max_abs": 0.010729670524597168,
+      "relative_l2": 0.0052132059622724955
+    },
+    "passed": true
+  },
+  {
+    "method": "cce_exact",
+    "n": 32,
+    "v": 256000,
+    "d": 2304,
+    "reference": "FP32, TF32 disabled, identical BF16 inputs",
+    "loss": 2.117525577545166,
+    "reference_loss": 2.1239938735961914,
+    "loss_abs": 0.006468296051025391,
+    "e": {
+      "max_abs": 7.196888327598572e-05,
+      "relative_l2": 0.006477864013252972
+    },
+    "c": {
+      "max_abs": 0.010729670524597168,
+      "relative_l2": 0.005213049228111547
+    },
+    "passed": true
+  },
+  {
+    "method": "baseline",
+    "n": 32,
+    "v": 256000,
+    "d": 2304,
+    "reference": "FP32, TF32 disabled, identical BF16 inputs",
+    "loss": 2.117570161819458,
+    "reference_loss": 2.1239938735961914,
+    "loss_abs": 0.0064237117767333984,
+    "e": {
+      "max_abs": 7.196888327598572e-05,
+      "relative_l2": 0.006482224401142005
+    },
+    "c": {
+      "max_abs": 0.010729670524597168,
+      "relative_l2": 0.005219161511214617
+    },
+    "passed": true
+  }
+]

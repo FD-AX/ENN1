@@ -1,0 +1,929 @@
+{
+  "profiles": [
+    {
+      "label": "large",
+      "method": "baseline",
+      "shape": [
+        4096,
+        65536,
+        512
+      ],
+      "calls_per_iteration": 11.0,
+      "kernel_ms_per_iteration": {
+        "LogSoftmax fw/bw": 8.532216333333333,
+        "GEMM": 8.568332999999999,
+        "Dtype/copy": 4.205062666666667,
+        "Other kernels": 1.2763890000000002
+      },
+      "cuda_kernel_ms": 22.582001,
+      "largest_allocation_bytes": 1073741824,
+      "kernel_metadata": {}
+    },
+    {
+      "label": "large",
+      "method": "cce",
+      "shape": [
+        4096,
+        65536,
+        512
+      ],
+      "calls_per_iteration": 26.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 10.326585333333332,
+        "CCE forward": 2.9879146666666663,
+        "Other kernels": 0.06423533333333335,
+        "Vocabulary sort": 0.030347,
+        "Dtype/copy": 0.002389
+      },
+      "cuda_kernel_ms": 13.411471333333333,
+      "largest_allocation_bytes": 67108864,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 5233,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 14367,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 234.057144,
+          "warps per SM": 936.228577,
+          "grid": [
+            16384,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 5714,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 14565,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 234.057144,
+          "warps per SM": 936.228577,
+          "grid": [
+            16384,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        }
+      }
+    },
+    {
+      "label": "large",
+      "method": "cce_exact",
+      "shape": [
+        4096,
+        65536,
+        512
+      ],
+      "calls_per_iteration": 19.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 19.519479000000004,
+        "CCE forward": 2.9215809999999998,
+        "Dtype/copy": 0.24079066666666668,
+        "Other kernels": 0.1451956666666667
+      },
+      "cuda_kernel_ms": 22.827046333333335,
+      "largest_allocation_bytes": 134217728,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 7273,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 19743,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 234.057144,
+          "warps per SM": 936.228577,
+          "grid": [
+            16384,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 7758,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 19855,
+          "registers per thread": 255,
+          "shared memory": 57344,
+          "blocks per SM": 234.057144,
+          "warps per SM": 936.228577,
+          "grid": [
+            16384,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 0
+        }
+      }
+    },
+    {
+      "label": "large",
+      "method": "cce_no_filter",
+      "shape": [
+        4096,
+        65536,
+        512
+      ],
+      "calls_per_iteration": 17.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 9.900645666666666,
+        "CCE forward": 2.918290666666666,
+        "Other kernels": 0.061045,
+        "Dtype/copy": 0.001546666666666667
+      },
+      "cuda_kernel_ms": 12.881527999999998,
+      "largest_allocation_bytes": 67108864,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 6249,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 16984,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 234.057144,
+          "warps per SM": 936.228577,
+          "grid": [
+            16384,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 6722,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 17096,
+          "registers per thread": 253,
+          "shared memory": 49152,
+          "blocks per SM": 234.057144,
+          "warps per SM": 936.228577,
+          "grid": [
+            16384,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        }
+      }
+    },
+    {
+      "label": "small",
+      "method": "baseline",
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "calls_per_iteration": 11.0,
+      "kernel_ms_per_iteration": {
+        "GEMM": 0.15219266666666667,
+        "LogSoftmax fw/bw": 0.03907233333333333,
+        "Dtype/copy": 0.023381333333333334,
+        "Other kernels": 0.024085333333333334
+      },
+      "cuda_kernel_ms": 0.23873166666666668,
+      "largest_allocation_bytes": 16777216,
+      "kernel_metadata": {}
+    },
+    {
+      "label": "small",
+      "method": "cce",
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "calls_per_iteration": 21.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 0.19512566666666667,
+        "CCE forward": 0.05962666666666667,
+        "Other kernels": 0.03230999999999999,
+        "Dtype/copy": 0.0020483333333333334
+      },
+      "cuda_kernel_ms": 0.2891106666666667,
+      "largest_allocation_bytes": 4194304,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 1137,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 3625,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 3.657143,
+          "warps per SM": 14.628572,
+          "grid": [
+            256,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 1632,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 3795,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 3.657143,
+          "warps per SM": 14.628572,
+          "grid": [
+            256,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        }
+      }
+    },
+    {
+      "label": "small",
+      "method": "cce_exact",
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "calls_per_iteration": 19.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 0.35074299999999997,
+        "CCE forward": 0.0576,
+        "Other kernels": 0.018004333333333334,
+        "Dtype/copy": 0.006239999999999999
+      },
+      "cuda_kernel_ms": 0.4325873333333333,
+      "largest_allocation_bytes": 8388608,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 3177,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 8973,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 3.657143,
+          "warps per SM": 14.628572,
+          "grid": [
+            256,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 3662,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 9085,
+          "registers per thread": 255,
+          "shared memory": 57344,
+          "blocks per SM": 3.657143,
+          "warps per SM": 14.628572,
+          "grid": [
+            256,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 0
+        }
+      }
+    },
+    {
+      "label": "small",
+      "method": "cce_no_filter",
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "calls_per_iteration": 17.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 0.188609,
+        "CCE forward": 0.057686,
+        "Other kernels": 0.015221333333333332,
+        "Dtype/copy": 0.0012483333333333333
+      },
+      "cuda_kernel_ms": 0.26276466666666665,
+      "largest_allocation_bytes": 4194304,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 2153,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 6214,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 3.657143,
+          "warps per SM": 14.628572,
+          "grid": [
+            256,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 2626,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 6326,
+          "registers per thread": 253,
+          "shared memory": 49152,
+          "blocks per SM": 3.657143,
+          "warps per SM": 14.628572,
+          "grid": [
+            256,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        }
+      }
+    },
+    {
+      "label": "wide",
+      "method": "baseline",
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "calls_per_iteration": 11.0,
+      "kernel_ms_per_iteration": {
+        "GEMM": 8.577068666666666,
+        "LogSoftmax fw/bw": 2.124414,
+        "Dtype/copy": 1.0004093333333335,
+        "Other kernels": 0.32400100000000004
+      },
+      "cuda_kernel_ms": 12.025893,
+      "largest_allocation_bytes": 268435456,
+      "kernel_metadata": {}
+    },
+    {
+      "label": "wide",
+      "method": "cce",
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "calls_per_iteration": 26.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 9.940652,
+        "CCE forward": 2.8430466666666665,
+        "Other kernels": 0.2981333333333333,
+        "Vocabulary sort": 0.030432333333333336,
+        "Dtype/copy": 0.0021330000000000003
+      },
+      "cuda_kernel_ms": 13.114397333333333,
+      "largest_allocation_bytes": 268435456,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 9329,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 25084,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 58.514286,
+          "warps per SM": 234.057144,
+          "grid": [
+            4096,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 9810,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 25282,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 58.514286,
+          "warps per SM": 234.057144,
+          "grid": [
+            4096,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        }
+      }
+    },
+    {
+      "label": "wide",
+      "method": "cce_exact",
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "calls_per_iteration": 19.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 17.42820866666667,
+        "CCE forward": 2.814931666666667,
+        "Dtype/copy": 1.005838,
+        "Other kernels": 0.6225836666666666
+      },
+      "cuda_kernel_ms": 21.871562000000004,
+      "largest_allocation_bytes": 536870912,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 11369,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 30456,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 58.514286,
+          "warps per SM": 234.057144,
+          "grid": [
+            4096,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 11854,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 30568,
+          "registers per thread": 255,
+          "shared memory": 57344,
+          "blocks per SM": 58.514286,
+          "warps per SM": 234.057144,
+          "grid": [
+            4096,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 0
+        }
+      }
+    },
+    {
+      "label": "wide",
+      "method": "cce_no_filter",
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "calls_per_iteration": 17.0,
+      "kernel_ms_per_iteration": {
+        "CCE backward": 9.679381666666666,
+        "CCE forward": 2.8150313333333337,
+        "Other kernels": 0.29977800000000004,
+        "Dtype/copy": 0.0012583333333333335
+      },
+      "cuda_kernel_ms": 12.795449333333332,
+      "largest_allocation_bytes": 268435456,
+      "kernel_metadata": {
+        "_cce_lse_forward_kernel": {
+          "External id": 10345,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 27693,
+          "registers per thread": 255,
+          "shared memory": 49152,
+          "blocks per SM": 58.514286,
+          "warps per SM": 234.057144,
+          "grid": [
+            4096,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        },
+        "_cce_backward_kernel": {
+          "External id": 10818,
+          "queued": 0,
+          "device": 0,
+          "context": 1,
+          "stream": 7,
+          "correlation": 27805,
+          "registers per thread": 253,
+          "shared memory": 49152,
+          "blocks per SM": 58.514286,
+          "warps per SM": 234.057144,
+          "grid": [
+            4096,
+            1,
+            1
+          ],
+          "block": [
+            128,
+            1,
+            1
+          ],
+          "est. achieved occupancy %": 17
+        }
+      }
+    }
+  ],
+  "cache_benchmark": [
+    {
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "method": "baseline",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 0.3147999942302704,
+      "trial_medians_ms": [
+        0.31331200897693634,
+        0.33398400247097015,
+        0.3147999942302704
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "method": "baseline",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 0.27190399169921875,
+      "trial_medians_ms": [
+        0.27008000016212463,
+        0.27327999472618103,
+        0.27190399169921875
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "method": "cce",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 0.9374879896640778,
+      "trial_medians_ms": [
+        0.9524959921836853,
+        0.8978559970855713,
+        0.9374879896640778
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "method": "cce",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 0.8574079871177673,
+      "trial_medians_ms": [
+        1.022752046585083,
+        0.809984028339386,
+        0.8574079871177673
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "method": "cce_no_filter",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 0.7221440076828003,
+      "trial_medians_ms": [
+        0.7678719758987427,
+        0.7206080257892609,
+        0.7221440076828003
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        4096,
+        512
+      ],
+      "method": "cce_no_filter",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 0.6461439728736877,
+      "trial_medians_ms": [
+        0.6318719983100891,
+        0.6461439728736877,
+        0.6736000180244446
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        512
+      ],
+      "method": "baseline",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 5.813103914260864,
+      "trial_medians_ms": [
+        5.8113439083099365,
+        5.813839912414551,
+        5.813103914260864
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        512
+      ],
+      "method": "baseline",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 5.750223875045776,
+      "trial_medians_ms": [
+        5.7481279373168945,
+        5.750223875045776,
+        5.750239849090576
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        512
+      ],
+      "method": "cce",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 3.8672800064086914,
+      "trial_medians_ms": [
+        3.8672800064086914,
+        3.853808045387268,
+        3.879215955734253
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        512
+      ],
+      "method": "cce",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 3.8379199504852295,
+      "trial_medians_ms": [
+        3.8379199504852295,
+        3.8154239654541016,
+        3.9536960124969482
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        512
+      ],
+      "method": "cce_no_filter",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 3.672864079475403,
+      "trial_medians_ms": [
+        3.648560047149658,
+        3.672864079475403,
+        3.756160020828247
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        512
+      ],
+      "method": "cce_no_filter",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 3.6065280437469482,
+      "trial_medians_ms": [
+        3.6065280437469482,
+        3.584991931915283,
+        3.6413440704345703
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "method": "baseline",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 12.214000225067139,
+      "trial_medians_ms": [
+        12.209904193878174,
+        12.214000225067139,
+        12.287263870239258
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "method": "baseline",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 12.115871906280518,
+      "trial_medians_ms": [
+        12.1080322265625,
+        12.115871906280518,
+        12.162799835205078
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "method": "cce",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 13.903151988983154,
+      "trial_medians_ms": [
+        14.057199954986572,
+        13.903151988983154,
+        13.877823829650879
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "method": "cce",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 13.883359909057617,
+      "trial_medians_ms": [
+        13.883359909057617,
+        13.752511978149414,
+        13.904895782470703
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "method": "cce_no_filter",
+      "mode": "repeat_cache",
+      "median_of_medians_ms": 13.444591999053955,
+      "trial_medians_ms": [
+        13.328495979309082,
+        13.444591999053955,
+        13.453184127807617
+      ]
+    },
+    {
+      "shape": [
+        1024,
+        65536,
+        2048
+      ],
+      "method": "cce_no_filter",
+      "mode": "l2_flush",
+      "median_of_medians_ms": 13.303808212280273,
+      "trial_medians_ms": [
+        13.303808212280273,
+        13.357024192810059,
+        13.300800323486328
+      ]
+    }
+  ]
+}

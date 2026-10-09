@@ -1,0 +1,41 @@
+{
+  "timestamp_utc": "2026-10-09T11:11:57.215355+00:00",
+  "python": "3.11.9",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "torch": "2.11.0+cu128",
+  "cuda": "12.8",
+  "triton": "3.6.0",
+  "triton_distribution": "3.6.0.post26",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti",
+  "vram_bytes": 17094475776,
+  "capability": [
+    12,
+    0
+  ],
+  "driver": "591.86",
+  "upstream_commit": "3de376c106a1916bc5e1b619f9c77c87a461ee1c",
+  "repository_base_commit": "700f5a57aae853c92cc186b46c8737183202e8ec",
+  "source_sha256": {
+    "analyze.py": "603bea2834f814300f36b050a561815b6289bc83d178f8bac19b5e1a1c1a2b0d",
+    "build_presentation.py": "94846bce8ef0383968d2018acbbfd883e69787090b222a579eca1af7af4ef652",
+    "cache_benchmark.py": "c944d6fe33215d62af9da004729366a9c6bae1e89cfb5d390dcbbb3d2ec2fb95",
+    "common.py": "9d5cd2ea34e321af88e1a7cb4bf5f816cdfd544547017a699437a6e4fc31cc4f",
+    "diagnostics.py": "7ab06fe560d6ac8575df87b7dfb78acfc9e1ea9b0592dd51cc2e35febb8510ca",
+    "download_real_inputs.py": "05d41f9617cb3f424813fa69d8a6747c0e04a7272827ea9d5a6d175b640b6efd",
+    "equations.py": "51cb966bf6485fa8eb16a1784c05109ff3dcdbd96cf37dd78d5274f3c6a18da7",
+    "experiment.py": "e7a84c32be4645c1088a521abbb85bbf8141d14978b5189f0f19a7945ce40d10",
+    "export_pdf.py": "ba5a217f24e32ef9de9157428cd24c7ca28e387946f39bdd69e7c3b667a61dcd",
+    "prepare_gemma.py": "7b62135fc3ade71fdd347c00ef0a7f987161f20b4c37134316b56f2c64aef590",
+    "probe_model_access.py": "d8f1d5dee73a61be08392da578d58e22beefcda1d4a0101d7a3b5a2939d9cbb7",
+    "profile_experiment.py": "e73d4d341ac4ac29ffed7b1970afbebc8c6a2bb3a341cd7c7d0a47608eafff1d",
+    "smoke.py": "11a9c451ee99b923a7faddef1b6d88b63a3024dfea894ff41d4ace0d2d0ed68a",
+    "test_equations.py": "25c28928d2dcf12fbe4ae742f9329f713542f83fd874c6050c63c6de26883a16",
+    "__init__.py": "c6f7903b2e13a04924ad79380c5d94f9652d9b8505e3412d02f273fb7a05b24b"
+  },
+  "tf32": false,
+  "dtype": "bfloat16",
+  "args": {
+    "output": "HW2/results/cache_benchmark"
+  },
+  "windows_adaptation": "version probe only; ASCII cache path; kernels unmodified"
+}

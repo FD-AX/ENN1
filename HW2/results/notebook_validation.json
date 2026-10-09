@@ -1,0 +1,39 @@
+{
+  "public_copy_execution": true,
+  "helper_py_files_in_copy": 0,
+  "code_cells_executed": 44,
+  "cpu_tests": 5,
+  "trace_checks": 15,
+  "notebook_code_sha256": "71cc50e6dbf0c1139545f4bab7c72cf8d4691c60e54877636ab4872e8d37c8cb",
+  "gpu_smoke_execution": true,
+  "gpu_correctness_checks": 60,
+  "gpu_smoke_benchmark_rows": 8,
+  "gpu_runtime_flag_overrides": {
+    "RUN_GPU_SMOKE": true
+  },
+  "gpu_smoke_artifacts": "notebook_smoke/",
+  "unchanged_function_bodies": [
+    "configure",
+    "loss_fn",
+    "make_data",
+    "online_lse",
+    "streaming_loss",
+    "analytical_gradients",
+    "memory_terms",
+    "EquationsTest",
+    "write_json",
+    "errors",
+    "correctness",
+    "measure",
+    "benchmark",
+    "toy_training",
+    "summarize_trace",
+    "tokenized_example",
+    "real_loss",
+    "compare_chunks",
+    "profile_real"
+  ],
+  "public_links_checked": 39,
+  "presentation_pages": 17,
+  "presentation_overflow_slides": 0
+}
