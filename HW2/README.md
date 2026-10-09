@@ -90,6 +90,15 @@ Extra peak = peak allocated − allocated before operation; это не полн
 Runtime benefit зависит от shape и режима: при N1024/V65536/D2048 CCE медленнее на 12.3%.
 Полное обучение LLM и качество модели не воспроизводились.
 
+**Сравнение с Table 1:** определение extra peak совпадает с авторским `mem_delta`,
+включая делитель 2²⁰. На N8192 CCE измерен: 1.040 MiB forward и 1164.269 MiB forward+backward;
+это близко к округлённым 1 и 1164 в статье. Baseline 24000.001 / 28000.001 MiB —
+**экстраполяция** из N512–2048, а не измерение. [Таблица, формулы и ограничения](REPORT.md#table1-comparison).
+
+Runtime согласуется с механизмами §5.2 и Appendix C.2 статьи; их локальный причинный вклад
+не измерен. Остались пробелы: `torch.compile`, softmax sparsity / Fig. 3, обучение §5.3
+и полный model/FSDP расчёт Fig. 1 / Table A4.
+
 Неподтвердившиеся 4.228 ms small baseline исключены из выводов о скорости и timing-кривой;
 исходный JSON сохранён. Baseline Gemma N8192 заранее пропущен по memory guard — OOM не
 наблюдался. Причины расхождений, skipped tiles и аппаратные DRAM/occupancy counters не заявляются.

@@ -56,7 +56,7 @@ Extra peak означает `peak allocated − allocated before operation`; э�
 
 Главный проверенный эффект в показанных Gemma и синтетической точках — уменьшение extra allocation.
 Выигрыш времени зависит от shape и режима: на синтетической N1024/V65536/D2048 CCE default
-медленнее baseline на 12.3%. Причины различий runtime не установлены. Синтетическая сетка
+медленнее baseline на 12.3%. Механизмы авторов из §5.2 / Appendix C.2 согласуются с наблюдениями; их локальный причинный вклад не измерен (§10.9). Синтетическая сетка
 используется для проверки арифметики, масштабирования и режимов реализации.
 Baseline Gemma N8192 **не запускался из-за заранее заданного memory guard**: это эвристика
 предварительного пропуска, не доказанный upper bound и не наблюдённый OOM.
@@ -423,21 +423,132 @@ OOM обрабатывается отдельным статусом без по
 
 ![Profiler trace evidence](figures/profiler_breakdown.png)
 
-Сопоставление основных утверждений с их основаниями — [Приложение C. Реестр доказательств](#evidence). Неустановленные причины различий runtime не включаются в выводы.
+Сопоставление основных утверждений с их основаниями — [Приложение C. Реестр доказательств](#evidence). Механизмы из §5.2 / Appendix C.2 статьи сопоставлены с наблюдениями в §10.9; локальная причинность не заявляется.
 
 ### 10.7. Этап B: Gemma 2 2B / Alpaca
 
 Дополнительно извлечены 8192 prediction positions из 52 примеров Alpaca с настоящими весами `google/gemma-2-2b-it`. Revisions и input hashes зафиксированы. D=2304, V=256000, BF16, softcap=30. Это отдельный эксперимент; backbone inference выполнен до измерений, обучения backbone не было.
 
-На N=1024, forward+backward, авторский BF16-softcap baseline: **3500.001 MiB / 62.751 ms**; CCE default: **1132.734 MiB / 31.877 ms**. Здесь extra peak меньше в **3.09×**, время — в **1.97×**. No-filter занимает **59.362 ms**. На этой shape default быстрее no-filter; отдельная причина разницы не установлена.
+На N=1024, forward+backward, авторский BF16-softcap baseline: **3500.001 MiB / 62.751 ms**; CCE default: **1132.734 MiB / 31.877 ms**. Здесь extra peak меньше в **3.09×**, время — в **1.97×**. No-filter занимает **59.362 ms**. На этой shape default быстрее no-filter; направление согласуется с механизмом filtering из §5.2 статьи, но локальная sparsity не измерена (§10.9).
 
-Для N=8192 CCE default: forward extra peak **1.040 MiB**, forward+backward **1164.269 MiB / 251.254 ms**. Baseline при N=8192 **не запускался по memory guard**; это не измеренный OOM. На этой N отношение baseline/CCE не заявляется.
+Для N=8192 CCE default: forward extra peak **1.040 MiB**, forward+backward **1164.269 MiB / 251.254 ms**. Baseline при N=8192 **не запускался по memory guard**; это не измеренный OOM. Измеренное отношение baseline/CCE на этой N не заявляется; помеченная экстраполяция памяти приведена в §10.8.
 
 Пять checks loss/gradients на первых 32 позициях полного словаря прошли заданные допуски относительно **FP32**, TF32 off. Ошибка CCE default: relL2 ∇E **0.704%**, ∇C **0.522%**. Эти проверки не смешиваются с 60 FP64 checks этапа A.
 
 Сохранены **38 измерений**, две строки с planned skip и **3 дополнительные profiler-трассы**. Протокол, все отличия от статьи, таблицы и ограничения: [Приложение A. Gemma 2 2B / Alpaca: подробный протокол](#gemma), [Приложение E. Полные таблицы Gemma](#gemma-tables).
 
 ![Gemma2 measurements](figures/gemma2_scaling.png)
+
+<a id="table1-comparison"></a>
+
+### 10.8. Прямое сопоставление памяти с Table 1
+
+**Определение метрики совпадает.** В закреплённом [benchmark/memory.py](https://github.com/apple-aiml-research/ml-cross-entropy/blob/3de376c106a1916bc5e1b619f9c77c87a461ee1c/benchmark/memory.py#L13)
+`mem_delta` вычитает `allocated_bytes.all.peak` до операции из значения после операции.
+Перед исходным snapshot сбрасывается peak, поэтому исходный peak равен текущему allocated.
+Это тот же extra allocated peak, который измеряет HW2. Результат делится на `2**20`:
+название `MB` в upstream соответствует единицам, которые мы явно обозначаем **MiB**.
+Совпадение определения не означает одинаковый allocator/software или полный протокол запуска.
+
+Модель Gemma 2 2B Instruct, Alpaca, N=8192, V=256000, D=2304, BF16 и softcap=30
+соответствуют конфигурации §5.1; baseline повторяет порядок операций
+[benchmark/__main__.py](https://github.com/apple-aiml-research/ml-cross-entropy/blob/3de376c106a1916bc5e1b619f9c77c87a461ee1c/benchmark/__main__.py#L20).
+Таблица ниже сопоставляет локальные данные с [Table 1, PDF стр. 8](https://arxiv.org/html/2411.09009v2#S5.T1).
+У статьи значения округлены; четыре измеренные строки CCE **близки на уровне её округления**.
+Это не проверка побитового равенства.
+
+| Величина при N=8192 | Table 1, «MB» | HW2, MiB | Статус HW2 |
+|---|---:|---:|---|
+| CCE, loss | 1 | 1.040 | измерено |
+| CCE без filtering/sorting, loss | 0.09 | 0.094 | измерено |
+| CCE, loss+gradient | 1164 | 1164.269 | измерено |
+| CCE без filtering/sorting, loss+gradient | 1162 | 1162.316 | измерено |
+| Lower bound: BF16 ∇E + ∇C | 1161 | 1161.000 | расчёт размера |
+| Baseline, loss | 24000 | 24000.001 | **экстраполяция, не измерение** |
+| Baseline, loss+gradient | 28000 | 28000.001 | **экстраполяция, не измерение** |
+
+Для loss no-filter значение 0.094 MiB при округлении до двух знаков даёт 0.09,
+как в Table 1. Для loss+gradient значения округляются до 1164 и 1162 MiB.
+`cce_no_filter` в нашем commit выключает и filtering, и подготовку sorting, поэтому его
+сопоставляем с режимом без gradient filtering; отдельная строка 6 «No Vocab Sorting»
+не воспроизведена как изолированная абляция.
+
+**Как получена экстраполяция baseline.** Для N=512,1024,2048 сохранённые bytes точно укладываются
+в аффинные зависимости (нулевой остаток на этих трёх точках):
+
+$$M_{fw}(N)=3\,072\,000N+1024\quad\text{bytes},$$
+$$M_{fw+bw}(N)=3\,584\,000N+1024\quad\text{bytes}.$$
+
+В MiB наклоны равны **2.9296875** и **3.41796875 на токен**, а свободный член —
+**0.0009765625 MiB**. Поэтому буквально постоянны наклоны, а не отношение MiB/token:
+в последнем остаётся небольшой член `1024/N` bytes/token. Продолжение той же зависимости
+до N=8192 даёт **24000.001** и **28000.001 MiB**; после округления это числа baseline из Table 1.
+Формула нижней границы — `2·D·(N+V)/2²⁰ = 1161 MiB` для двух BF16 gradients.
+Исходные точки, остатки и результаты вычислений: [table1_comparison.json](results/table1_comparison.json).
+
+Экстраполяция предполагает сохранение наблюдённого режима allocations за пределами измеренной
+области. Она **не подтверждает измерением** заголовочные отношения «24 GB → 1 MB» и
+«28 GB → 1 GB» на нашей GPU, не устанавливает возможность запуска и не является OOM.
+Она показывает согласование продолжения baseline memory scaling с таблицей статьи;
+память CCE на N8192 при этом действительно измерена. Baseline N8192 остаётся planned skip.
+
+**Границы сопоставления.** HW2 набирает 8192 валидные next-token позиции. Это соответствует
+`keep_invalids=False` в закреплённом [benchmark/data/models.py](https://github.com/apple-aiml-research/ml-cross-entropy/blob/3de376c106a1916bc5e1b619f9c77c87a461ee1c/benchmark/data/models.py#L44).
+Appendix B и Table A1 описывают удаление ignored tokens *дополнительно* к Table 1;
+следовательно, набор и доля ignored positions нашего batch не объявляются совпадающими с Table 1.
+Отличаются также seed/order, способ extraction, версии библиотек и GPU.
+В Table 1 — A100-SXM4 80 GB, PyTorch 2.4.1, CUDA 12.4, усреднение по 5 seeds.
+Закреплённый benchmark по умолчанию усредняет 50 CUDA-event итераций с синхронизацией после серии;
+HW2 использует median 30 samples с синхронизацией после каждого, одна RTX 5070 Ti.
+Поэтому **251.254 ms HW2 и 145 ms статьи не используются для межаппаратного speedup**.
+
+### 10.9. Объяснения статьи и статус локальной проверки
+
+**Рост D.** В [Appendix C.2, PDF стр. 15–16](https://arxiv.org/html/2411.09009v2#A3.SS2) авторы связывают ухудшение относительного
+runtime при меньшем V/D с организацией parallel work: у CCE она задаётся блоками N×V,
+а увеличение D добавляет работу без аналогичного увеличения параллелизма.
+Наш проигрыш CCE default при N1024/V65536/D2048 **согласуется с этим механизмом**.
+Сравнение в HW2 выполнено с eager baseline; пример авторов использует `torch.compile`.
+Это не одинаковые контрольные методы и не локальное измерение hardware occupancy.
+
+**Filtering и реальные logits.** В [§5.2 и Fig. 3](https://arxiv.org/html/2411.09009v2#S5.SS2) авторы показывают спад
+упорядоченных вероятностей и связывают эффективность filtering с малостью большинства вкладов.
+У нас no-filter/default по времени loss+gradient равен **1.84× при N8192** и
+**1.86× при N1024**. В округлённых строках Table 1 отношение `357/145≈2.46×`.
+Направление эффекта на Gemma согласуется со статьёй. Однако локальные доли вероятностей
+выше `2⁻¹²`, rank crossing и число пропущенных tiles **не измерялись**.
+Поэтому разницу между Gemma и синтетикой нельзя уже объявить доказанным эффектом sparsity:
+одновременно различаются shapes, softcap, sorting и другие параметры.
+
+Объяснения авторов приводятся как проверяемые механизмы из статьи. Их согласованность с
+наблюдениями — интерпретация, а не установление локального причинного вклада.
+Причина неповторившихся **4.228 ms** small baseline остаётся неизвестной: эти разделы статьи
+не объясняют конкретную timing anomaly.
+
+### 10.10. Режимы upstream и непокрытые строки Table 1
+
+| HW2 / upstream | Соответствие в Table 1 | Что выполнено |
+|---|---|---|
+| `cce` | Строка 1, CCE | Синтетика и Gemma |
+| `baseline_author` | Строка 5, baseline | Gemma до N2048; N8192 — только экстраполяция |
+| `cce_no_filter` | Режим строки 7; в данном commit также без sorting | Синтетика и Gemma; строка 6 отдельно не проверена |
+| `cce_filter_fp32` | Аналог режима строки 8 CCE-Kahan в текущем upstream | Только синтетические correctness/diagnostics; Gemma не измерен |
+| `cce_exact` | Alias `cce_kahan_full_c_full_e`, обе фильтрации отключены | Синтетика и Gemma; отдельной такой строки в Table 1 нет |
+| `cce_kahan_full_c` | Строка 9 CCE-Kahan-FullC | Не измерен |
+| `impl='torch_compile'` | Строка 4, важный контроль времени | Не измерен |
+
+Основания: [presets в cce_utils.py](https://github.com/apple-aiml-research/ml-cross-entropy/blob/3de376c106a1916bc5e1b619f9c77c87a461ee1c/cut_cross_entropy/cce_utils.py),
+[условие подготовки sorting в cce.py](https://github.com/apple-aiml-research/ml-cross-entropy/blob/3de376c106a1916bc5e1b619f9c77c87a461ee1c/cut_cross_entropy/cce.py#L61),
+[описания режимов в README upstream](https://github.com/apple-aiml-research/ml-cross-entropy/blob/3de376c106a1916bc5e1b619f9c77c87a461ee1c/README.md#L103).
+В статье обсуждается Kahan summation; наш commit включает FP32 accumulation в соответствующих
+presets. Это сопоставление назначения режимов, не утверждение, что FP32 accumulation —
+буквально тот же алгоритм компенсированного суммирования.
+
+Непокрытые части: baseline `torch.compile` и полный набор методов Table 1; локальная
+softmax sparsity/rank curve Fig. 3; fine-tuning/pretraining curves §5.3; полный расчёт
+model/FSDP памяти и достижимого batch из Fig. 1 / Table A4. Toy classifier updates не заменяют
+проверку §5.3. Добавление preset требует нового запуска, correctness и memory checks;
+наличие соответствующего API само по себе не является результатом эксперимента.
 
 ## 11. Что проверено и что осталось за пределами
 
@@ -449,7 +560,7 @@ OOM обрабатывается отдельным статусом без по
 | Filtering всегда даёт ускорение | Не подтверждено на синтетических данных |
 | Loss и gradients совпадают с FP64 побитово | Нет: сохранены ненулевые отклонения |
 | Полная сходимость LLM как в статье | Не проверялась; toy training недостаточен |
-| Отношение 24 GB → 1 MB в исходном setup статьи | Не воспроизведено: локальный baseline при N8192 не запускался |
+| Table 1: память CCE и baseline при N8192 | CCE измерен и близок к округлённым значениям статьи; baseline только экстраполирован из N512–2048 (§10.8), не запущен |
 | Максимальный batch, FSDP, энергия | Не исследовались |
 
 Ограничения: одна потребительская GPU, Windows/Triton port, новая относительно статьи версия PyTorch, 30 samples внутри одного запуска, без независимых повторов всего grid и без стабилизации частоты. Этап A использует синтетические входы; этап B — один зафиксированный набор Gemma/Alpaca activations. `torch.compile`, Torch Tune, Liger и полный набор baseline статьи в наше сравнение не включены. Это локальные classifier-head измерения, а не полная реплика всех таблиц статьи.
@@ -577,7 +688,7 @@ V=256000, D=2304, BF16, softcap=30, forward+backward:
 - No-filter forward+backward: **462.971 ms**.
 - Exact forward+backward: **747.201 ms**.
 
-Baseline при N=8192 **не запускался**. Здесь не заявляется воспроизведение отношения памяти из статьи и не подставляются её числа вместо локального baseline. Совпадение названия модели и размеров не делает эксперимент идентичным статье.
+Baseline при N=8192 **не запускался**. Здесь не заявляется измеренное отношение baseline/CCE: в §10.8 приведена отдельная, явно помеченная экстраполяция baseline и сравнение измеренной памяти CCE с Table 1. Совпадение названия модели и размеров не делает эксперимент идентичным статье.
 
 ### 6. Профилирование реальных activations
 
@@ -722,7 +833,7 @@ Median-of-medians трёх trials для small:
 | CCE default max relative L2 dE = 0.0082192 | тот же JSON, method=cce, максимум `e.relative_l2` | FP64 reference на тех же BF16 inputs; не любой dataset |
 | Extra peak 3072.001 → 68.533 MiB | `results/main/measurements.json`, N4096/V65536/D512/kind=fw_bw | PyTorch allocated extra, не вся VRAM и не полный LLM |
 | Runtime 22.710 → 14.034 ms | те же две строки, `median_ms` | 30 CUDA-event samples, эта GPU и этот протокол |
-| CCE default медленнее baseline при D2048 | main JSON N1024/V65536/D2048; повторено в `cache_benchmark/measurements.json` | Две методики, конкретная shape; причина не установлена |
+| CCE default медленнее baseline при D2048 | main JSON N1024/V65536/D2048; повторено в `cache_benchmark/measurements.json` | Согласуется с механизмом Appendix C.2; локальный причинный вклад не измерен (§10.9) |
 | Initial small baseline timing ненадёжен для выводов | main 4.228 ms; 3 новых trials в cache_benchmark: около 0.3 ms | Причина расхождения не установлена, старое число исключено из выводов |
 | Baseline выделяет отдельный 1 GiB buffer | `profiles/large_baseline.summary.json`, `cuda_allocations.Bytes` | Это allocation, не общий peak |
 | CCE default largest allocation 64 MiB | `profiles/large_cce.summary.json` | N4096/V65536/D512, эта implementation |
@@ -731,6 +842,9 @@ Median-of-medians трёх trials для small:
 | Автоматический BF16 filter epsilon = 2⁻¹² | upstream `utils.py`, `torch.finfo(dtype).eps/32` | Это порог алгоритма, а не минимальное представимое BF16 число |
 | Toy loss после 100 updates близок | `results/main/toy_training.json` | Только фиксированный batch и classifier; никаких выводов о LLM convergence |
 | Авторские числа 24 GB → ~1 MB | arXiv:2411.09009v2, abstract | Результат авторов, нами в том setup не измерен |
+| Метрика памяти совпадает с upstream `mem_delta` | `benchmark/memory.py` закреплённого commit, reset peak перед s0 и делитель 2²⁰; §10.8 | Совпадение определения extra peak, а не полного экспериментального setup |
+| Память CCE при N8192 близка к Table 1 | `results/table1_comparison.json`: четыре строки `measured`; исходные `gemma2/measurements.json` | Сопоставление с округлённой таблицей, не побитовое равенство |
+| Baseline N8192: 24000.001 / 28000.001 MiB | Аффинные зависимости по N512,1024,2048; нулевые остатки в `baseline_affine_fits` | Экстраполяция, не запуск, не наблюдённый OOM и не измеренное отношение baseline/CCE |
 | Gemma N1024: 3500.001 → 1132.734 MiB, 62.751 → 31.877 ms | `results/gemma2/measurements.json`, V256000/D2304/softcap30/kind=fw_bw | Classifier head; baseline_author; 30 samples, без backbone |
 | Gemma N8192: CCE forward extra 1.040 MiB | тот же JSON, method=cce,kind=fw | Baseline здесь не запускался; отношение baseline/CCE не вычисляется |
 | Gemma checks 5/5; default relL2 dE=0.007038 | `results/gemma2/correctness.json` | N32, полный V; reference FP32, не FP64 |
@@ -988,9 +1102,9 @@ V=256000, D=2304, BF16, softcap=30. Peak — дополнительная alloca
 
 ### Слайд 9. Результаты авторов
 
-**На слайд:** Gemma 2 2B: loss memory 24 GB → ~1 MB; classifier-head training memory 28 GB → ~1 GB. Явная подпись: данные статьи.
+**На слайд:** Table 1 и HW2 при N8192: четыре измеренные строки памяти CCE, расчёт BF16 gradients и две явно помеченные экстраполяции baseline. Метрика в обоих случаях — extra allocated peak, upstream делит bytes на 2²⁰.
 
-**Сказать:** «Эти цифры задают мотивацию, но не являются нашим измерением. Мы используем другую GPU, software stack и собственную выборку Gemma / Alpaca; синтетика — дополнительная серия. Полного обучения Gemma не было».
+**Сказать:** «Память CCE на N8192 измерена и близка к округлённым значениям Table 1. Baseline 24000 и 28000 MiB — продолжение зависимости, проверенной на N512–2048; при N8192 он не запускался. Совпадает определение метрики, но отличаются batch composition, software и hardware; это не побитовое повторение эксперимента».
 
 ### Слайд 10. Наш протокол
 
@@ -1019,7 +1133,7 @@ Baseline при N8192 не запускался по заранее заданн
 и режима; полное обучение и качество LLM не проверены.
 
 **Сказать:** «На синтетической N1024/V65536/D2048 CCE оказался на 12.3% медленнее baseline.
-Причину разницы runtime мы не установили. Exact — название preset, а не отсутствие округления.
+Результат согласуется с объяснением параллелизма в Appendix C.2; локальный причинный вклад не измерен (§10.9). Exact — название preset, а не отсутствие округления.
 Переключение режимов меняет также sorting/accumulation, поэтому не изолирует стоимость filtering.
 Время profiler и обычный benchmark latency рассматриваются отдельно».
 

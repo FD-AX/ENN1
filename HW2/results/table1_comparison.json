@@ -1,0 +1,119 @@
+{
+  "source": "gemma2/measurements.json",
+  "source_sha256": "b6e42ed2ba46dc33962f2827a758691f53daefbc519ded8451f936cdaab38379",
+  "paper_url": "https://arxiv.org/html/2411.09009v2",
+  "paper_table": "Table 1, PDF page 8",
+  "units": "MiB; pinned upstream prints MB but divides by 2**20",
+  "rows": [
+    {
+      "quantity": "CCE, loss",
+      "paper_table1": 1,
+      "local_MiB": 1.03955078125,
+      "status": "measured",
+      "method": "cce",
+      "kind": "fw",
+      "n": 8192
+    },
+    {
+      "quantity": "CCE без filtering/sorting, loss",
+      "paper_table1": 0.09,
+      "local_MiB": 0.09375,
+      "status": "measured",
+      "method": "cce_no_filter",
+      "kind": "fw",
+      "n": 8192
+    },
+    {
+      "quantity": "CCE, loss+gradient",
+      "paper_table1": 1164,
+      "local_MiB": 1164.26904296875,
+      "status": "measured",
+      "method": "cce",
+      "kind": "fw_bw",
+      "n": 8192
+    },
+    {
+      "quantity": "CCE без filtering/sorting, loss+gradient",
+      "paper_table1": 1162,
+      "local_MiB": 1162.31591796875,
+      "status": "measured",
+      "method": "cce_no_filter",
+      "kind": "fw_bw",
+      "n": 8192
+    },
+    {
+      "quantity": "Lower bound: BF16 ∇E + ∇C",
+      "paper_table1": 1161,
+      "local_MiB": 1161.0,
+      "status": "calculated"
+    },
+    {
+      "quantity": "Baseline, loss",
+      "paper_table1": 24000,
+      "local_MiB": 24000.0009765625,
+      "status": "extrapolated_not_measured",
+      "method": "baseline_author",
+      "kind": "fw",
+      "n": 8192
+    },
+    {
+      "quantity": "Baseline, loss+gradient",
+      "paper_table1": 28000,
+      "local_MiB": 28000.0009765625,
+      "status": "extrapolated_not_measured",
+      "method": "baseline_author",
+      "kind": "fw_bw",
+      "n": 8192
+    }
+  ],
+  "baseline_affine_fits": {
+    "fw": {
+      "source_n": [
+        512,
+        1024,
+        2048
+      ],
+      "source_extra_bytes": [
+        1572865024,
+        3145729024,
+        6291457024
+      ],
+      "slope_bytes_per_token": 3072000,
+      "intercept_bytes": 1024,
+      "residual_bytes": [
+        0,
+        0,
+        0
+      ],
+      "prediction_n": 8192,
+      "predicted_extra_bytes": 25165825024
+    },
+    "fw_bw": {
+      "source_n": [
+        512,
+        1024,
+        2048
+      ],
+      "source_extra_bytes": [
+        1835009024,
+        3670017024,
+        7340033024
+      ],
+      "slope_bytes_per_token": 3584000,
+      "intercept_bytes": 1024,
+      "residual_bytes": [
+        0,
+        0,
+        0
+      ],
+      "prediction_n": 8192,
+      "predicted_extra_bytes": 29360129024
+    }
+  },
+  "no_filter_over_default_fw_bw": {
+    "n1024": 1.8622205723782006,
+    "n8192": 1.8426425878939598,
+    "paper_rounded_table1": 2.462068965517241
+  },
+  "interpretation": "Four measured memory entries, one buffer-size calculation, two extrapolations. No observed baseline N8192 or OOM. Rounded paper entries do not establish bitwise equality."
+}

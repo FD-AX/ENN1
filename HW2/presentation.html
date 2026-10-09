@@ -133,17 +133,13 @@
   <div class="foot">Важно для защиты: CCE не уменьшает vocabulary и не меняет training objective. Он меняет реализацию classifier-head cross-entropy.</div>
 </section>
 
-<section class="slide" data-section="main" data-notes="Один слайд результатов статьи. Отделяем результаты статьи от локального эксперимента. Числа 24GB→1MB и 28GB→1GB прямо из abstract.">
-  <div class="top"><span>08 · paper results</span><span>paper claims, not ours</span></div>
-  <h1 class="wide">Что получили авторы</h1>
-  <div class="strip"><div><div class="v red">24 GB</div><div class="l">Gemma 2 2B · regular loss computation</div></div><div><div class="v">→</div><div class="l">CCE</div></div><div><div class="v green">1 MB</div><div class="l">CCE loss computation</div></div><div><div class="v">28 GB → 1 GB</div><div class="l">classifier-head training memory</div></div></div>
-  <div class="cols3" style="margin-top:1.3rem;flex:0">
-    <div class="section"><div class="kicker">memory</div><h2>Negligible CE footprint</h2><p>Главный эффект paper.</p></div>
-    <div class="section"><div class="kicker">batch size</div><h2>1.5×–10× larger</h2><p>В их 16×80GB FSDP setup, exact values — Table A4.</p></div>
-    <div class="section redline"><div class="kicker">training</div><h2>No reported loss in convergence</h2><p>Paper сравнивает training curves; Figure 4.</p></div>
-  </div>
-  <div class="foot">Sources in paper: Abstract, Figure 1, Table 1, Figure 4, Appendix Table A4. На этом слайде только результаты авторов.</div>
-</section>
+<section class="slide" data-section="main" data-notes="Определение памяти совпадает с benchmark/memory.py: peak allocated после операции минус peak после reset до операции; делитель 2**20. Четыре строки CCE реально измерены. Baseline N8192 не запускался. Экстраполяция 3072000*N+1024 и 3584000*N+1024 bytes проверена только на N512,1024,2048. Table 1 округлена: это не побитовое совпадение. Batch composition, GPU и timing-протокол отличаются.">
+<div class="top"><span>08 · Table 1 vs HW2</span><span>N8192 · V256000 · D2304 · BF16 · softcap30</span></div>
+<h1 class="wide">Table 1: та же метрика памяти</h1>
+<div style="flex:1;min-height:0;display:flex;align-items:center"><table style="width:100%;border-collapse:collapse;font-size:clamp(1rem,1.4vw,1.4rem);line-height:1.65;text-align:left">
+<thead><tr style="border-bottom:2px solid #e30613"><th>Величина</th><th>Статья, «MB»</th><th>HW2, MiB</th><th>Статус HW2</th></tr></thead><tbody><tr><td>CCE, loss</td><td>1</td><td>1.040</td><td>измерено</td></tr><tr><td>CCE без filtering/sorting, loss</td><td>0.09</td><td>0.094</td><td>измерено</td></tr><tr><td>CCE, loss+gradient</td><td>1164</td><td>1164.269</td><td>измерено</td></tr><tr><td>CCE без filtering/sorting, loss+gradient</td><td>1162</td><td>1162.316</td><td>измерено</td></tr><tr><td>Lower bound: BF16 ∇E + ∇C</td><td>1161</td><td>1161.000</td><td>расчёт</td></tr><tr><td>Baseline, loss</td><td>24000</td><td>24000.001</td><td>экстраполяция*</td></tr><tr><td>Baseline, loss+gradient</td><td>28000</td><td>28000.001</td><td>экстраполяция*</td></tr></tbody></table></div>
+<div class="takeaway">Измеренная память CCE близка к округлённым значениям Table 1. Extra peak = peak allocated − allocated before; единицы — 2²⁰ bytes.</div>
+<div class="foot">* Baseline: экстраполяция из N512,1024,2048; N8192 не запускался. Это не наблюдённый OOM и не измеренное отношение baseline/CCE. Источники: <a href="REPORT.md#table1-comparison">отчёт §10.8</a>, Table 1 (PDF стр. 8), upstream benchmark/memory.py; <a href="results/table1_comparison.json">расчёт из JSON</a>. Состав batch и протоколы различаются.</div></section>
 
 <section class="slide" data-section="main" data-notes="Основной reproduction — classifier-head forward+backward на извлечённых Gemma activations. Backbone inference нужен только для подготовки и не входит в измерение. Синтетика проверяет формулы, масштабирование и режимы upstream; это не чистая факторная абляция filtering.">
     <div class="top"><span>09 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
@@ -162,14 +158,14 @@
     <div style="flex:1;min-height:0;display:flex;align-items:center"><img src="figures/gemma2_scaling.png" alt="Measured real Gemma classifier-head memory and runtime" style="width:100%;max-height:100%;object-fit:contain"></div>
     <div class="foot"><strong>Числа сверху:</strong> N=1024,V=256000,D=2304, BF16, softcap=30, forward+backward. 52 примера, 8192 валидные позиции. Backbone исключён. Baseline N=8192 не запускался по заранее заданному memory guard; OOM не наблюдался. <a href="REPORT.md#gemma">Протокол Gemma</a>; results/gemma2/.</div></section>
 
-<section class="slide" data-section="main" data-notes="Сравнение CCE с exact одновременно меняет filtering и accumulation. Даже переключение filter_eps меняет также sorting, поэтому отдельный вклад пороговой проверки не измерен.">
+<section class="slide" data-section="main" data-notes="На Gemma N8192 no-filter/default = 1.84 по времени head, на N1024 = 1.86. Это согласуется с §5.2, но локальная sparsity не измерена. Сравнение CCE с exact одновременно меняет filtering и accumulation. Даже переключение filter_eps меняет также sorting, поэтому отдельный вклад пороговой проверки не измерен.">
     <div class="top"><span>11 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
     <h1 class="wide">Выводы в пределах измерений</h1>
     <div class="cols3">
     <div class="section"><div class="kicker">measured</div><h2>Gemma classifier head</h2><p>N=1024, V=256000, D=2304, softcap=30: extra peak 3500.00 → 1132.73 MiB. Это peak сверх живых входов; gradients включены.</p></div>
-    <div class="section"><div class="kicker">depends on shape</div><h2>Ускорение не универсально</h2><p>При N=1024, V=65536, D=2048: 13.69 ms CCE против 12.18 ms baseline. CCE медленнее на 12.3%.</p></div>
+    <div class="section"><div class="kicker">depends on shape</div><h2>Ускорение не универсально</h2><p>N1024/V65536/D2048: 13.69 ms CCE против 12.18 ms baseline (+12.3%). Направление согласуется с механизмом параллелизма из Appendix C.2; контрольные методы отличаются.</p></div>
     <div class="section redline"><div class="kicker">limits</div><h2>Границы проверки</h2><p>Сравниваются режимы upstream, а не один изолированный threshold. Exact — название preset с FP32 accumulation, не отсутствие округления. LLM convergence и perplexity не проверялись.</p></div></div>
-    <div class="takeaway">В показанных Gemma и синтетической точках CCE снижает extra peak. Выигрыш времени зависит от shape и режима; причины различий runtime отдельно не установлены.</div>
+    <div class="takeaway">Память согласуется с Table 1. Runtime согласуется с механизмами §5.2 и App. C.2; локальная причинность не проверена. Softmax sparsity и torch.compile остаются пробелами.</div>
     <div class="foot"><a href="REPORT.md">REPORT.md</a> · <a href="REPORT.md#synthetic-tables">Таблицы отчёта</a> · <a href="REPORT.md#speaker-notes">Заметки для защиты</a> · upstream 3de376c106a1916bc5e1b619f9c77c87a461ee1c</div></section>
 
 <!-- APPENDIX -->
