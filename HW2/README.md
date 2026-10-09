@@ -12,6 +12,12 @@
 локально и исключены через `.gitignore`; notebook их не импортирует и не запускает.
 Авторская CCE-библиотека, PyTorch и Triton остаются внешними зависимостями.
 
+## Быстро прочитать работу
+
+В notebook: §2 — формулы, §4 — correctness, §§10–12 — основной Gemma experiment,
+§§5–6 — синтетическое масштабирование, §14 — выводы. §§7–9 и §13 содержат diagnostics
+и audit. Для исполнения используется обычный порядок Run All сверху вниз.
+
 ## Открыть и проверить сохранённые результаты
 
 Команды из корня репозитория:
@@ -73,10 +79,16 @@ Triton Windows 3.6.0.post26. Полные сведения находятся в
 
 ## Что подтверждают результаты
 
-Синтетическая N4096/V65536/D512, BF16, forward+backward: extra allocated peak
-3072.001 → 68.533 MiB, время 22.710 → 14.034 ms (baseline → default CCE).
-Gemma N1024/V256000/D2304/softcap30: 3500.001 → 1132.734 MiB и 62.751 → 31.877 ms.
-Это измерения classifier head. Полное обучение LLM и качество модели не воспроизводились.
+Основной результат — **classifier-head forward+backward на извлечённых activations Gemma 2 2B / Alpaca**:
+N1024/V256000/D2304, BF16, softcap30. Extra allocated peak **3500.001 → 1132.734 MiB**,
+время **62.751 → 31.877 ms** (baseline_author → CCE default; 1.97× по времени head).
+Backbone не входит в измерение. [Подробности и full allocated peak](REPORT.md#main-result).
+
+Синтетика служит дополнительной проверкой: N4096/V65536/D512, BF16, forward+backward —
+extra peak 3072.001 → 68.533 MiB (−97.8%), время 22.710 → 14.034 ms.
+Extra peak = peak allocated − allocated before operation; это не полная VRAM процесса.
+Runtime benefit зависит от shape и режима: при N1024/V65536/D2048 CCE медленнее на 12.3%.
+Полное обучение LLM и качество модели не воспроизводились.
 
 Неподтвердившиеся 4.228 ms small baseline исключены из выводов о скорости и timing-кривой;
 исходный JSON сохранён. Baseline Gemma N8192 заранее пропущен по memory guard — OOM не

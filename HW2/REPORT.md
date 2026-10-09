@@ -17,7 +17,7 @@
 
 **Статья:** Erik Wijmans, Brody Huval, Alexander Hertzberg, Vladlen Koltun, Philipp Krähenbühl. *Cut Your Losses in Large-Vocabulary Language Models*, ICLR 2025. [PDF v2](sources/paper.pdf), [arXiv](https://arxiv.org/abs/2411.09009), [авторский код](https://github.com/apple-aiml-research/ml-cross-entropy).
 
-**Дата экспериментов:** 9 октября 2026, начало синтетического прогона 13:55 МСК. **Статус:** выполнены classifier-head эксперименты на синтетических данных (этап A, основная часть этого отчёта) и на реальных Gemma 2 2B / Alpaca activations (этап B, §10.7 и [отдельный отчёт](#gemma)). Полное обучение LLM и многокарточный FSDP из статьи не воспроизводились.
+**Дата экспериментов:** 9 октября 2026, начало синтетического прогона 13:55 МСК. **Статус:** выполнены classifier-head эксперименты на реальных Gemma 2 2B / Alpaca activations (основной reproduction result, §1 и [подробный протокол](#gemma)) и на синтетических данных (проверки и диагностика). Полное обучение LLM и многокарточный FSDP из статьи не воспроизводились.
 
 ## 1. Исследовательский вопрос и границы работы
 
@@ -27,12 +27,39 @@
 
 Проверяемые вопросы:
 
-1. Loss и градиенты CCE близки к независимому FP64-эталону на тех же входах.
+1. Loss и градиенты CCE проходят заданные допуски относительно независимого эталона на тех же входах: FP64 на синтетике, FP32 на Gemma.
 2. Дополнительная память forward у CCE не растёт как полный массив `N×V`; память backward включает обязательные градиенты.
 3. Относительная скорость зависит от `N`, `V`, `D` и режима накопления.
-4. Выключение filtering и изменение точности накопления дают разные эффекты; их нельзя объединять в одну абляцию.
+4. Режимы default, no-filter и exact сравниваются как варианты upstream implementation. Это не факторный эксперимент, изолирующий один filtering threshold: меняются также sorting и/или accumulation.
 
 Работа имеет три уровня: собственная математическая выкладка, проверка авторской реализации и аппаратные измерения. Учебная функция `streaming_loss` нужна для первого уровня. Для GPU-бенчмарка используется именно `cut_cross_entropy`, а не эта функция.
+
+<a id="main-result"></a>
+
+### Основной результат: classifier head на Gemma / Alpaca
+
+Реальные hidden activations и output weights **Gemma 2 2B**, подготовленные на **52 примерах Alpaca**,
+дают входы для отдельного classifier-head benchmark. Извлечены 8192 валидные next-token позиции;
+ниже показан префикс **N=1024, V=256000, D=2304**, BF16, softcap=30, **forward+backward**.
+Baseline использует авторский порядок BF16 matmul → BF16 softcap → FP32 CE.
+Время и память backbone inference/training в эти числа не входят.
+
+| Метод | Extra allocated peak, MiB | Full allocated peak, MiB | Median, ms |
+|---|---:|---:|---:|
+| baseline_author | 3500.001 | 4646.759 | 62.751 |
+| CCE default | 1132.734 | 2279.492 | 31.877 |
+
+Источник: [сырые измерения Gemma](results/gemma2/measurements.json), указанные shape и `kind=fw_bw`.
+Отношения baseline/CCE здесь равны **3.09× по extra peak** и **1.97× по времени classifier head**.
+Extra peak означает `peak allocated − allocated before operation`; это не вся VRAM процесса
+и не полный allocated peak. Полный протокол и pinned revisions — в [приложении A](#gemma).
+
+Главный проверенный эффект в показанных Gemma и синтетической точках — уменьшение extra allocation.
+Выигрыш времени зависит от shape и режима: на синтетической N1024/V65536/D2048 CCE default
+медленнее baseline на 12.3%. Причины различий runtime не установлены. Синтетическая сетка
+используется для проверки арифметики, масштабирования и режимов реализации.
+Baseline Gemma N8192 **не запускался из-за заранее заданного memory guard**: это эвристика
+предварительного пропуска, не доказанный upper bound и не наблюдённый OOM.
 
 ## 2. Обозначения и постановка задачи
 
@@ -957,31 +984,44 @@ V=256000, D=2304, BF16, softcap=30. Peak — дополнительная alloca
 
 **На слайд:** baseline хранит N×V; CCE хранит статистики и пересчитывает tiles.
 
-**Сказать:** «Это обмен памяти на recomputation. Наивный подсчёт GEMM даёт около 6NVD FLOPs для baseline forward+backward и 8NVD без filtering для CCE. Fusion и снижение memory traffic могут компенсировать дополнительные FLOPs».
+**Сказать:** «Это обмен памяти на recomputation. Наивный подсчёт GEMM даёт около 6NVD FLOPs для baseline forward+backward и 8NVD без filtering для CCE. Этот подсчёт сам по себе не предсказывает runtime; runtime измеряется отдельно».
 
 ### Слайд 9. Результаты авторов
 
 **На слайд:** Gemma 2 2B: loss memory 24 GB → ~1 MB; classifier-head training memory 28 GB → ~1 GB. Явная подпись: данные статьи.
 
-**Сказать:** «Эти цифры задают мотивацию, но не являются нашим измерением. Мы используем другую GPU, software stack и синтетические activations; полного обучения Gemma не было».
+**Сказать:** «Эти цифры задают мотивацию, но не являются нашим измерением. Мы используем другую GPU, software stack и собственную выборку Gemma / Alpaca; синтетика — дополнительная серия. Полного обучения Gemma не было».
 
 ### Слайд 10. Наш протокол
 
-**На слайд:** RTX 5070 Ti; PyTorch 2.11.0+cu128; Triton Windows 3.6.0; BF16; 11 shapes; 5 warmup + 30 repeats. Авторский commit `3de376c`.
+**На слайд:** основной эксперимент — classifier head Gemma 2 2B / Alpaca; реальные E/C,
+52 примера, 8192 позиции, V256000/D2304/softcap30. Дополнительно — синтетическая сетка и profiler.
 
-**Сказать:** «Проверены loss и оба gradients относительно FP64 на тех же BF16 inputs. В производительности сравнили baseline, CCE, no-filter и exact. Для памяти фиксируем extra allocated peak сверх живых входов; gradients в него входят. Время измеряем CUDA events».
+**Сказать:** «Backbone нужен только для extraction и не входит в benchmark. На Gemma проверены
+loss и оба gradients относительно FP32 на N=32 и полном vocabulary. На синтетике — 60 checks
+против FP64. Время: 5 warmup, 30 CUDA-event samples. Память: extra allocated peak сверх base;
+gradients входят. Методы сравниваются как режимы upstream, не как изолированный threshold».
 
-### Слайд 11. Наш результат
+### Слайд 11. Главный результат: classifier head Gemma
 
-**На слайд:** `N=4096,V=65536,D=512`: extra peak **3072.001 → 68.533 MiB (44.83×)**; forward+backward **22.710 → 14.034 ms (1.62×)**. 60/60 numerical checks. График `figures/scaling_n.png`.
+**На слайд:** N1024/V256000/D2304, BF16, softcap30, forward+backward:
+extra peak **3500.001 → 1132.734 MiB**, median **62.751 → 31.877 ms**;
+baseline_author → CCE default. График `figures/gemma2_scaling.png`.
 
-**Сказать:** «Основной эффект по памяти воспроизведён. Если считать полный allocated peak вместе с base, сокращение составляет 20.65×, а не 44.83×. Максимальная relative L2 ошибка default CCE по embeddings — 0.822%, по classifier — 0.595% относительно FP64. Это не утверждение о побитовом равенстве».
+**Сказать:** «На извлечённых activations classifier-head forward+backward имеет в этой точке
+примерно в 1.97 раза меньшее время. Это не ускорение всей Gemma. Extra peak уменьшился на 67.6%,
+или в 3.09 раза; full allocated peak приведён отдельно в отчёте: 4646.759 → 2279.492 MiB.
+Baseline при N8192 не запускался по заранее заданному memory guard; наблюдённого OOM не было».
 
 ### Слайд 12. Вывод и ограничения
 
-**На слайд:** память ↓; скорость зависит от shape; full LLM convergence не проверена.
+**На слайд:** extra allocation уменьшается в показанных точках; выигрыш runtime зависит от shape
+и режима; полное обучение и качество LLM не проверены.
 
-**Сказать:** «При D=2048 CCE оказался на 12.3% медленнее baseline. В дополнительной синтетической серии no-filter быстрее default; причину разности runtime мы не установили. Toy classifier обучается с близкими loss curves, но это не проверка качества LLM. В profiler-трассе большой точки baseline есть allocations по 1 GiB, у default CCE крупнейший allocation — 64 MiB. Измеренный peak приведён отдельно».
+**Сказать:** «На синтетической N1024/V65536/D2048 CCE оказался на 12.3% медленнее baseline.
+Причину разницы runtime мы не установили. Exact — название preset, а не отсутствие округления.
+Переключение режимов меняет также sorting/accumulation, поэтому не изолирует стоимость filtering.
+Время profiler и обычный benchmark latency рассматриваются отдельно».
 
 ### Appendix A1. Разбор на числах
 
@@ -1002,13 +1042,18 @@ Scores `[2,1,0]`, target=0: `LSE≈2.407606`, `loss≈0.407606`, `p_target≈0.6
 - Первоначальный small baseline 4.228 ms не воспроизвёлся: новые trials дают около 0.3 ms. Исходная точка исключена из выводов.
 - Время под profiler не заменяет latency обычного benchmark. Доля skipped tiles, DRAM traffic и аппаратные stall counters не измерялись.
 
+### Appendix A5. Синтетическая точка и масштабирование N
+
+**На слайд:** N4096/V65536/D512, BF16, forward+backward:
+extra peak **3072.001 → 68.533 MiB (−97.8%)**; median **22.710 → 14.034 ms**.
+
+**Сказать:** «Это дополнительная синтетическая проверка. Отношение extra peak — 44.83×,
+но full allocated peak составляет 3156.282 → 152.814 MiB, отношение 20.65×.
+Ни одно из них не является отношением полной VRAM процессов. Скорость 1.62× относится
+только к этой shape и протоколу. Первоначальная small timing не подтвердилась и исключена
+из выводов; причина неизвестна».
+
 ### Короткие ответы на вопросы
-
-#### Appendix A5. Реальные Gemma / Alpaca activations
-
-**На слайд:** N1024,V256000,D2304, BF16, softcap30: extra peak **3500.001 → 1132.734 MiB**, total **62.751 → 31.877 ms**, baseline_author → CCE.
-
-**Сказать:** «Это уже выходы pretrained Gemma 2 2B на 52 примерах Alpaca. Backbone использован только для extraction; его время сюда не входит. Режим no-filter занял 59.362 ms, default — 31.877 ms. Причину разницы через sparsity мы не устанавливаем. Пять проверок gradients прошли на первых 32 позициях, полном vocabulary, относительно FP32. Baseline при N8192 не запускался по memory guard: это planned skip, а не OOM. Full-model обучение не выполнялось».
 
 #### Вопросы
 
@@ -1022,4 +1067,4 @@ Scores `[2,1,0]`, target=0: `LSE≈2.407606`, `loss≈0.407606`, `p_target≈0.6
 
 **Почему сравнение с FP64 честное?** Эталон использует те же входы после BF16 rounding, что позволяет измерить ошибки вычислений отдельно от квантования входов.
 
-**Что ещё нужно для полного воспроизведения статьи?** Реальные embeddings/weights выбранной LLM, сопоставимый dataset и training protocol, дополнительные baselines, несколько независимых runs и аппаратная платформа, соответствующая исследуемым таблицам. Эти результаты нельзя подменять нашей синтетикой.
+**Что ещё нужно для полного воспроизведения статьи?** Реальные embeddings/weights уже использованы в head benchmark. Не выполнены полное обучение, сравнение training/validation curves и качества модели, весь набор baselines и повторение аппаратного setup статьи. Classifier-head результаты не заменяют эти проверки.

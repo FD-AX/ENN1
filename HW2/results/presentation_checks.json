@@ -52,7 +52,7 @@
   {
     "scroll": 1000,
     "client": 1000,
-    "heading": "Наши измеренные результаты"
+    "heading": "Gemma: classifier-head forward+backward"
   },
   {
     "scroll": 1000,
@@ -82,6 +82,6 @@
   {
     "scroll": 1000,
     "client": 1000,
-    "heading": "Gemma 2 2B / Alpaca"
+    "heading": "Синтетика: дополнительный peak и время"
   }
 ]

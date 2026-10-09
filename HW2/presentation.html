@@ -145,31 +145,31 @@
   <div class="foot">Sources in paper: Abstract, Figure 1, Table 1, Figure 4, Appendix Table A4. На этом слайде только результаты авторов.</div>
 </section>
 
-<section class="slide" data-section="main" data-notes="Измеряем classifier head без backbone. Не воспроизводим полный training campaign. Source commit закреплён; Windows adapter меняет только определение версии Triton и путь cache.">
+<section class="slide" data-section="main" data-notes="Основной reproduction — classifier-head forward+backward на извлечённых Gemma activations. Backbone inference нужен только для подготовки и не входит в измерение. Синтетика проверяет формулы, масштабирование и режимы upstream; это не чистая факторная абляция filtering.">
     <div class="top"><span>09 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
     <h1 class="wide">Что мы воспроизводим</h1>
     <div class="cols3">
-    <div class="section"><div class="kicker">correctness</div><h2>60 проверок</h2><p>Loss, ∇E, ∇C против FP64. Три seed, tail blocks, ignore labels, softcap. Допуски: Δloss &lt; 0.05; relL2 &lt; 5%.</p></div>
-    <div class="section"><div class="kicker">measurement</div><h2>11 shapes · 88 строк</h2><p>Sweep N, V, D. Четыре метода; forward и forward + backward. 5 warmup + 30 timing samples.</p></div>
-    <div class="section redline"><div class="kicker">ablation</div><h2>Filtering / accumulation</h2><p>CCE, no-filter, exact; дополнительная серия с FP32 accumulation и отдельным backward.</p></div></div>
+    <div class="section redline"><div class="kicker">основной эксперимент</div><h2>Gemma classifier head</h2><p>Реальные hidden activations и output weights Gemma 2 2B. Alpaca: 52 примера, 8192 валидные позиции; V=256000, D=2304, softcap=30.</p></div>
+    <div class="section"><div class="kicker">correctness</div><h2>Loss, ∇E и ∇C</h2><p>Gemma: 5 checks против FP32 на N=32 и полном V. Синтетика: 60 checks против FP64. Допуски: |Δloss| &lt; 0.05, relL2 &lt; 5%.</p></div>
+    <div class="section"><div class="kicker">дополнительные проверки</div><h2>Shapes и profiler</h2><p>Синтетическая сетка: 11 shapes, 88 строк. Отдельный backward, повторные timings, варианты filtering/accumulation. Всего 15 profiler-трасс.</p></div></div>
     <div class="strip"><div><div class="v">5070 Ti</div><div class="l">16 GB · Windows</div></div><div><div class="v">2.11.0</div><div class="l">PyTorch · CUDA 12.8</div></div><div><div class="v">3.6.0</div><div class="l">Triton Windows</div></div><div><div class="v">3de376c</div><div class="l">upstream commit · BF16</div></div></div>
-    <div class="foot">Синтетические независимые E и C; seed 42; TF32 off. Extra peak = max allocated − allocated before. Команда: python -m HW2.experiment --output HW2/results/repeat</div></section>
+    <div class="foot">5 warmup + 30 CUDA-event samples на точку; TF32 off. Extra peak = peak allocated − allocated before operation. Backbone не входит в benchmark. Запуск: <a href="cce_reproduction.ipynb">notebook</a>, §§10–12; pinned revisions — <a href="REPORT.md#gemma">отчёт</a>.</div></section>
 
-<section class="slide" data-section="main" data-notes="44.83 раза — отношение дополнительной памяти, а не полной VRAM. Градиенты входят в extra peak. Полный allocated peak сокращается в 20.65 раза. Полосы — p10–p90 повторений, не доверительный интервал.">
+<section class="slide" data-section="main" data-notes="Pretrained модель использована для extraction, backbone не обучался. Время backbone исключено. Default CCE 31.88 ms, no-filter 59.36 ms на N1024. Причинный вклад sparsity не измерен. Проверка gradients — FP32 reference на первых 32 позициях, полном vocabulary.">
     <div class="top"><span>10 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
-    <h1 class="wide">Наши измеренные результаты</h1>
-    <div class="strip"><div><div class="v">44.83×</div><div class="l">меньше extra peak: 3072.00 → 68.53 MiB</div></div><div><div class="v">1.62×</div><div class="l">быстрее: 22.71 → 14.03 ms</div></div><div><div class="v">60/60</div><div class="l">проверок в допусках</div></div><div><div class="v">0.822%</div><div class="l">max relL2 ∇E для CCE vs FP64</div></div></div>
-    <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center"><img src="figures/scaling_n.png" alt="Measured memory and runtime versus token count" style="max-width:100%;max-height:100%;object-fit:contain"></div>
-    <div class="foot"><strong>Числа сверху:</strong> N=4096, V=65536, D=512, BF16, forward+backward. График: V=65536, D=512, sweep N. Полный allocated peak: 3156.28 → 152.81 MiB (20.65×). results/main/measurements.json</div></section>
+    <h1 class="wide">Gemma: classifier-head forward+backward</h1>
+    <div class="strip"><div><div class="v">−67.6%</div><div class="l">extra peak: 3500.00 → 1132.73 MiB (3.09×)</div></div><div><div class="v">1.97×</div><div class="l">head: 62.75 → 31.88 ms</div></div><div><div class="v">38</div><div class="l">измеренных строк; 2 planned skips</div></div><div><div class="v">5/5</div><div class="l">checks на N=32 против FP32</div></div></div>
+    <div style="flex:1;min-height:0;display:flex;align-items:center"><img src="figures/gemma2_scaling.png" alt="Measured real Gemma classifier-head memory and runtime" style="width:100%;max-height:100%;object-fit:contain"></div>
+    <div class="foot"><strong>Числа сверху:</strong> N=1024,V=256000,D=2304, BF16, softcap=30, forward+backward. 52 примера, 8192 валидные позиции. Backbone исключён. Baseline N=8192 не запускался по заранее заданному memory guard; OOM не наблюдался. <a href="REPORT.md#gemma">Протокол Gemma</a>; results/gemma2/.</div></section>
 
 <section class="slide" data-section="main" data-notes="Сравнение CCE с exact одновременно меняет filtering и accumulation. Даже переключение filter_eps меняет также sorting, поэтому отдельный вклад пороговой проверки не измерен.">
     <div class="top"><span>11 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
     <h1 class="wide">Выводы в пределах измерений</h1>
     <div class="cols3">
-    <div class="section"><div class="kicker">measured</div><h2>Память в большой точке</h2><p>CCE: extra peak 68.53 MiB против 3072 MiB у baseline. Размер BF16 градиентов по формуле: 68 MiB.</p></div>
+    <div class="section"><div class="kicker">measured</div><h2>Gemma classifier head</h2><p>N=1024, V=256000, D=2304, softcap=30: extra peak 3500.00 → 1132.73 MiB. Это peak сверх живых входов; gradients включены.</p></div>
     <div class="section"><div class="kicker">depends on shape</div><h2>Ускорение не универсально</h2><p>При N=1024, V=65536, D=2048: 13.69 ms CCE против 12.18 ms baseline. CCE медленнее на 12.3%.</p></div>
-    <div class="section redline"><div class="kicker">limits</div><h2>Границы проверки</h2><p>В дополнительной синтетической серии no-filter быстрее default. Toy loss после 100 updates — 3.6005. LLM convergence и perplexity не проверялись.</p></div></div>
-    <div class="takeaway">В измеренной большой точке CCE использует меньше памяти и времени. При D=2048 CCE default медленнее baseline. Причины разницы runtime отдельно не установлены.</div>
+    <div class="section redline"><div class="kicker">limits</div><h2>Границы проверки</h2><p>Сравниваются режимы upstream, а не один изолированный threshold. Exact — название preset с FP32 accumulation, не отсутствие округления. LLM convergence и perplexity не проверялись.</p></div></div>
+    <div class="takeaway">В показанных Gemma и синтетической точках CCE снижает extra peak. Выигрыш времени зависит от shape и режима; причины различий runtime отдельно не установлены.</div>
     <div class="foot"><a href="REPORT.md">REPORT.md</a> · <a href="REPORT.md#synthetic-tables">Таблицы отчёта</a> · <a href="REPORT.md#speaker-notes">Заметки для защиты</a> · upstream 3de376c106a1916bc5e1b619f9c77c87a461ee1c</div></section>
 
 <!-- APPENDIX -->
@@ -199,13 +199,13 @@
     <h1 class="wide">Что видно в profiler</h1>
     <div style="flex:1;min-height:0;display:flex;align-items:center"><img src="figures/profiler_breakdown.png" alt="Measured CUDA kernel durations and allocation timeline" style="width:100%;max-height:100%;object-fit:contain"></div>
     <div class="takeaway">Baseline: allocations по 1 GiB. CCE default: крупнейший allocation 64 MiB. Sorting kernels есть в default и отсутствуют в no-filter.</div>
-    <div class="foot">N=4096,V=65536,D=512. Три iterations под profiler, не обычный latency benchmark. Трассы: results/profiles/*.trace.json.gz; PROFILING.md. Доля skipped tiles и DRAM counters не измерены.</div></section>
-<section class="slide" data-section="appendix" data-notes="Pretrained модель использована для extraction, backbone не обучался. Время backbone исключено. Default CCE 31.88 ms, no-filter 59.36 ms на N1024. Причинный вклад sparsity не измерен. Проверка gradients — FP32 reference на первых 32 позициях, полном vocabulary.">
-    <div class="top"><span>A5 · reproduction</span><span>RTX 5070 Ti · BF16</span></div>
-    <h1 class="wide">Gemma 2 2B / Alpaca</h1>
-    <div class="strip"><div><div class="v">3.09×</div><div class="l">меньше extra peak: 3500.00 → 1132.73 MiB</div></div><div><div class="v">1.97×</div><div class="l">меньше времени: 62.75 → 31.88 ms</div></div><div><div class="v">38</div><div class="l">измеренных строк; 2 planned skips</div></div><div><div class="v">5/5</div><div class="l">checks на N=32 против FP32</div></div></div>
-    <div style="flex:1;min-height:0;display:flex;align-items:center"><img src="figures/gemma2_scaling.png" alt="Measured real Gemma classifier-head memory and runtime" style="width:100%;max-height:100%;object-fit:contain"></div>
-    <div class="foot"><strong>Числа сверху:</strong> N=1024,V=256000,D=2304, BF16, softcap=30, forward+backward. 52 примера, 8192 валидные позиции. Baseline при N=8192 не запускался. GEMMA_REPORT.md; results/gemma2/.</div></section>
+    <div class="foot">N=4096,V=65536,D=512. Три iterations под profiler, не обычный latency benchmark. Трассы: results/profiles/*.trace.json.gz; <a href="REPORT.md#profiling">разбор профилирования</a>. Доля skipped tiles и DRAM counters не измерены.</div></section>
+<section class="slide" data-section="appendix" data-notes="44.83 раза — отношение дополнительной памяти, а не полной VRAM. Градиенты входят в extra peak. Полный allocated peak сокращается в 20.65 раза. Полосы — p10–p90 повторений, не доверительный интервал.">
+    <div class="top"><span>A5 · synthetic</span><span>RTX 5070 Ti · BF16</span></div>
+    <h1 class="wide">Синтетика: дополнительный peak и время</h1>
+    <div class="strip"><div><div class="v">−97.8%</div><div class="l">extra peak: 3072.00 → 68.53 MiB</div></div><div><div class="v">1.62×</div><div class="l">быстрее: 22.71 → 14.03 ms</div></div><div><div class="v">60/60</div><div class="l">проверок в допусках</div></div><div><div class="v">0.822%</div><div class="l">max relL2 ∇E для CCE vs FP64</div></div></div>
+    <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center"><img src="figures/scaling_n.png" alt="Measured memory and runtime versus token count" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+    <div class="foot"><strong>Числа сверху:</strong> N=4096, V=65536, D=512, BF16, forward+backward. График: V=65536, D=512, sweep N. Полный allocated peak: 3156.28 → 152.81 MiB (20.65×). results/main/measurements.json</div></section>
 </div>
 <div class="nav"><span class="counter" id="counter">01 / 12</span><div class="progress"><i id="bar"></i></div><span class="counter">← → · N notes</span><button id="prev">←</button><button id="next">→</button><button id="notesBtn">N</button></div>
 <div class="notes" id="notes"><h3>Speaker notes</h3><p id="notesText"></p></div>
